@@ -1,0 +1,746 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import {
+  ChevronLeft,
+  ChevronRight,
+  Anchor,
+  MapPin,
+  Activity,
+  AlertTriangle,
+  ShieldCheck,
+  Vibrate,
+  Brain,
+  Users,
+  Zap,
+  ArrowRight,
+  CheckCircle2,
+  Clock,
+  Smartphone,
+  Watch,
+  Heart,
+  Navigation2,
+  ScanLine,
+  Cpu,
+  Database,
+  Play,
+} from 'lucide-react';
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
+interface Slide {
+  id: string;
+  title: string;
+  subtitle?: string;
+  content: React.ReactNode;
+}
+
+// ---------------------------------------------------------------------------
+// Shared UI components
+// ---------------------------------------------------------------------------
+
+const ProgressBar = ({ current, total }: { current: number; total: number }) => (
+  <div className="fixed bottom-0 left-0 w-full h-1 bg-white/5 z-50">
+    <motion.div
+      className="h-full bg-green-400"
+      initial={{ width: 0 }}
+      animate={{ width: `${((current + 1) / total) * 100}%` }}
+      transition={{ duration: 0.3 }}
+    />
+  </div>
+);
+
+const Navigation = ({
+  onPrev, onNext, current, total,
+}: { onPrev: () => void; onNext: () => void; current: number; total: number }) => (
+  <div className="fixed bottom-8 right-8 flex items-center gap-4 z-50">
+    <div className="text-sm font-mono text-white/40 mr-4">
+      {String(current + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
+    </div>
+    <button
+      onClick={onPrev}
+      disabled={current === 0}
+      className="p-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 disabled:opacity-20 disabled:cursor-not-allowed transition-all"
+    >
+      <ChevronLeft className="w-6 h-6" />
+    </button>
+    <button
+      onClick={onNext}
+      disabled={current === total - 1}
+      className="p-3 rounded-full bg-green-500/80 hover:bg-green-400 disabled:opacity-20 disabled:cursor-not-allowed transition-all shadow-lg shadow-green-500/20"
+    >
+      <ChevronRight className="w-6 h-6 text-black" />
+    </button>
+  </div>
+);
+
+// ---------------------------------------------------------------------------
+// Slide content helpers
+// ---------------------------------------------------------------------------
+
+// Drift state badge
+const DriftBadge = ({ state }: { state: 'SAFE' | 'DRIFTING' | 'ALERT' }) => {
+  const cfg = {
+    SAFE:     { bg: 'bg-green-400/20',  border: 'border-green-400/50',  text: 'text-green-300',  dot: 'bg-green-400',  sub: '< 30 m'  },
+    DRIFTING: { bg: 'bg-amber-400/20',  border: 'border-amber-400/50',  text: 'text-amber-300',  dot: 'bg-amber-400',  sub: '30–50 m' },
+    ALERT:    { bg: 'bg-red-400/20',    border: 'border-red-400/50',    text: 'text-red-300',    dot: 'bg-red-400',    sub: '> 50 m'  },
+  }[state];
+  return (
+    <div className={`flex items-center gap-2 px-3 py-2 rounded-xl border ${cfg.bg} ${cfg.border}`}>
+      <div className={`w-2 h-2 rounded-full ${cfg.dot} shadow-lg`} />
+      <div>
+        <div className={`text-xs font-bold font-mono ${cfg.text}`}>{state}</div>
+        <div className="text-[10px] text-white/40">{cfg.sub}</div>
+      </div>
+    </div>
+  );
+};
+
+// ---------------------------------------------------------------------------
+// Slides
+// ---------------------------------------------------------------------------
+
+const slides: Slide[] = [
+
+  // =========================================================================
+  // SLIDE 1 — THE HOOK
+  // =========================================================================
+  {
+    id: 'hook',
+    title: 'The Hook',
+    subtitle: '"Capture our hearts before you capture our minds."',
+    content: (
+      <div className="grid lg:grid-cols-2 gap-12 items-center w-full max-w-7xl">
+
+        {/* LEFT — identity + problem */}
+        <div className="space-y-6">
+          {/* eyebrow */}
+          <div className="flex items-center gap-3 text-white/30 font-mono text-xs uppercase tracking-widest">
+            <span>Local Lifestyle Track</span>
+            <div className="w-1 h-1 rounded-full bg-white/20" />
+            <span>Team Runtime Terrors</span>
+          </div>
+
+          {/* title */}
+          <div>
+            <p className="text-green-400 font-mono text-sm uppercase tracking-[0.3em] mb-1">Project</p>
+            <h1 className="text-7xl md:text-8xl font-display font-bold tracking-tighter text-white leading-none">
+              ANCHOR
+            </h1>
+            <p className="mt-3 text-white/50 text-base italic font-light">
+              "Your neighbourhood, always within reach."
+            </p>
+          </div>
+
+          {/* who */}
+          <div className="p-5 rounded-2xl bg-white/5 border border-white/10">
+            <div className="flex items-center gap-2 mb-2 text-sky-300 font-bold text-sm uppercase tracking-wider">
+              <Users className="w-4 h-4" /> Who is this for?
+            </div>
+            <p className="text-white/70 text-sm leading-relaxed">
+              Active seniors (60+) who desire to explore local hubs
+              independently — without constant worry or supervision.
+            </p>
+          </div>
+
+          {/* pain point */}
+          <div className="p-5 rounded-2xl bg-amber-400/5 border border-amber-400/20">
+            <div className="flex items-center gap-2 mb-2 text-amber-300 font-bold text-sm uppercase tracking-wider">
+              <AlertTriangle className="w-4 h-4" /> The Pain Point
+            </div>
+            <p className="text-white/70 text-sm leading-relaxed">
+              Seniors limit outings due to fear of disorientation —
+              causing <strong className="text-white">social isolation</strong> and{' '}
+              <strong className="text-white">over-protection</strong> from well-meaning families.
+            </p>
+          </div>
+        </div>
+
+        {/* RIGHT — logo + stats + states */}
+        <div className="flex flex-col items-center gap-6">
+
+          {/* Logo placeholder */}
+          <div className="w-36 h-36 rounded-3xl bg-white/5 border-2 border-green-400/30 flex flex-col items-center justify-center gap-2 shadow-[0_0_60px_-10px_rgba(74,222,128,0.3)]">
+            <Anchor className="w-14 h-14 text-green-400" />
+            <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">[ logo ]</span>
+          </div>
+
+          {/* Stat chips */}
+          <div className="grid grid-cols-3 gap-3 w-full max-w-sm">
+            {[
+              { val: '60+',    sub: 'Target age' },
+              { val: '2',      sub: 'Signals fused' },
+              { val: '<10 s',  sub: 'Alert speed' },
+            ].map(({ val, sub }) => (
+              <div key={val} className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+                <div className="text-2xl font-bold text-green-400 font-display">{val}</div>
+                <div className="text-[10px] text-white/40 mt-0.5">{sub}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Drift state badges */}
+          <div className="w-full max-w-sm space-y-2">
+            <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest text-center mb-3">
+              Drift States
+            </p>
+            <DriftBadge state="SAFE" />
+            <DriftBadge state="DRIFTING" />
+            <DriftBadge state="ALERT" />
+          </div>
+
+          {/* Platform */}
+          <div className="flex items-center gap-2 text-xs font-mono text-white/25 uppercase tracking-widest">
+            <Watch className="w-4 h-4" />
+            <span>HarmonyOS · Huawei Watch · ArkTS</span>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+
+  // =========================================================================
+  // SLIDE 2 — THE CRAFTSMANSHIP
+  // =========================================================================
+  {
+    id: 'craftsmanship',
+    title: 'The Craftsmanship',
+    subtitle: '"Show us that you care about the user\'s feelings."',
+    content: (
+      <div className="flex flex-col w-full max-w-7xl gap-5">
+
+        {/* 4 screen cards */}
+        <div className="grid grid-cols-4 gap-4">
+          {[
+            {
+              title: 'Setup Screen',
+              badge: 'CAREGIVER SETUP',
+              color: 'green',
+              borderCls: 'border-green-400/30',
+              badgeCls: 'text-green-400 bg-green-400/10 border-green-400/20',
+              stripCls: 'bg-green-400',
+              bullets: [
+                'Large "Set Home Point" button',
+                'Plain-language explanation',
+                'Patient name input',
+                'High-contrast dark theme',
+              ],
+            },
+            {
+              title: 'Home Screen',
+              badge: 'REAL-TIME STATUS',
+              color: 'amber',
+              borderCls: 'border-amber-400/30',
+              badgeCls: 'text-amber-400 bg-amber-400/10 border-amber-400/20',
+              stripCls: 'bg-amber-400',
+              bullets: [
+                'Colour-coded SAFE/DRIFT/ALERT badge',
+                'Distance readout in metres',
+                'Radar dot shows direction',
+                'Last-updated timestamp',
+              ],
+            },
+            {
+              title: 'Alert View',
+              badge: 'ALERT STATE',
+              color: 'red',
+              borderCls: 'border-red-400/30',
+              badgeCls: 'text-red-400 bg-red-400/10 border-red-400/20',
+              stripCls: 'bg-red-400',
+              bullets: [
+                'Full-screen red overlay',
+                'Distance + GPS coordinates',
+                '3-pulse haptic on watch',
+                'Push notification to caregiver',
+              ],
+            },
+            {
+              title: 'Community Card',
+              badge: 'ON-WATCH ID',
+              color: 'sky',
+              borderCls: 'border-sky-400/30',
+              badgeCls: 'text-sky-300 bg-sky-400/10 border-sky-400/20',
+              stripCls: 'bg-sky-400',
+              bullets: [
+                'Swipeable pages on watch',
+                'Tap-to-call emergency contact',
+                'Medical summary & allergies',
+                'Editable by caregiver',
+              ],
+            },
+          ].map((s) => (
+            <div key={s.title} className={`rounded-2xl bg-white/5 border ${s.borderCls} flex flex-col overflow-hidden`}>
+              {/* colour strip */}
+              <div className={`h-1 w-full ${s.stripCls}`} />
+
+              <div className="p-4 flex flex-col gap-3 flex-1">
+                <div>
+                  <h3 className="font-bold text-sm text-white">{s.title}</h3>
+                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${s.badgeCls} mt-1 inline-block uppercase tracking-wider`}>
+                    {s.badge}
+                  </span>
+                </div>
+
+                {/* Screenshot placeholder */}
+                <div className={`rounded-xl bg-black/30 border ${s.borderCls} h-28 flex items-center justify-center`}>
+                  <ScanLine className="w-6 h-6 text-white/20" />
+                  <span className="text-[10px] text-white/20 ml-2 font-mono">[ Screenshot ]</span>
+                </div>
+
+                {/* Bullets */}
+                <ul className="space-y-1.5">
+                  {s.bullets.map((b) => (
+                    <li key={b} className="flex items-start gap-2 text-[11px] text-white/60">
+                      <div className={`w-1 h-1 rounded-full mt-1.5 shrink-0 ${s.stripCls}`} />
+                      {b}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Interaction highlights */}
+        <div className="grid grid-cols-3 gap-4">
+          {[
+            { icon: <Vibrate className="w-5 h-5 text-green-400" />, title: 'Haptic Patterns', body: 'Gentle 1-pulse on DRIFT · 3 firm pulses on ALERT · Silent on SAFE' },
+            { icon: <Zap className="w-5 h-5 text-sky-300" />,   title: 'Smooth Animations', body: '260 ms Swiper slide transitions between Community Card pages' },
+            { icon: <Clock className="w-5 h-5 text-amber-400" />, title: 'Battery Adaptive',  body: 'GPS slows to 60 s poll when patient is still — 10 s when walking' },
+          ].map(({ icon, title, body }) => (
+            <div key={title} className="flex items-start gap-3 p-4 rounded-2xl bg-white/5 border border-white/10">
+              <div className="p-2 rounded-xl bg-white/5 shrink-0">{icon}</div>
+              <div>
+                <div className="font-bold text-sm text-white mb-1">{title}</div>
+                <div className="text-xs text-white/50 leading-relaxed">{body}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    ),
+  },
+
+  // =========================================================================
+  // SLIDE 3 — THE LIVE DEMO
+  // =========================================================================
+  {
+    id: 'demo',
+    title: 'The Live Demo',
+    subtitle: '"This is your magic trick. Make it smooth, make it wow."',
+    content: (
+      <div className="flex flex-col items-center w-full max-w-4xl gap-6">
+
+        {/* Scenario header */}
+        <div className="w-full p-4 rounded-2xl bg-amber-400/5 border border-amber-400/20 text-center">
+          <div className="flex items-center justify-center gap-2 text-amber-300 font-bold text-sm uppercase tracking-widest">
+            <Play className="w-4 h-4" /> Roleplay Scenario — "Margaret's Morning Walk"
+          </div>
+        </div>
+
+        {/* Timeline steps */}
+        <div className="w-full space-y-3">
+          {[
+            {
+              num: '01', label: 'SETUP', color: 'green',
+              leftCls: 'bg-green-400', numCls: 'text-green-400', dotCls: 'border-green-400 shadow-green-400/50',
+              body: 'Caregiver opens ANCHOR, enters patient name "Margaret", taps "Set Home Point" — anchor GPS coordinate saved to persistent device storage.',
+            },
+            {
+              num: '02', label: 'MARGARET MOVES', color: 'amber',
+              leftCls: 'bg-amber-400', numCls: 'text-amber-400', dotCls: 'border-amber-400 shadow-amber-400/50',
+              body: 'Emulator location injected 35 m from anchor. Accelerometer motion simulated → DRIFTING state triggers. Watch fires 1 gentle haptic pulse.',
+            },
+            {
+              num: '03', label: 'ALERT FIRES', color: 'red',
+              leftCls: 'bg-red-400', numCls: 'text-red-400', dotCls: 'border-red-400 shadow-red-400/50',
+              body: 'Location updated to 60 m. Dual-signal confirmed: motion + GPS drift. ALERT state. 3 firm haptic pulses. Push notification: "Margaret may have left home."',
+            },
+            {
+              num: '04', label: 'FALL DETECTED', color: 'sky',
+              leftCls: 'bg-sky-400', numCls: 'text-sky-300', dotCls: 'border-sky-400 shadow-sky-400/50',
+              body: '"Simulate Fall" pressed on debug panel. ML classifier scores p(fall) ≥ 0.5 → confirmed. 3 long haptic pulses. Separate fall alert with GPS coords sent.',
+            },
+            {
+              num: '05', label: 'MARGARET RETURNS', color: 'green',
+              leftCls: 'bg-green-400', numCls: 'text-green-400', dotCls: 'border-green-400 shadow-green-400/50',
+              body: 'Location reset to within 30 m. Motion stops. State returns to SAFE — green badge. Caregiver is reassured.',
+            },
+          ].map(({ num, label, leftCls, numCls, dotCls, body }) => (
+            <div key={num} className="flex items-start gap-4">
+              {/* left accent */}
+              <div className={`w-1 self-stretch rounded-full ${leftCls} shrink-0`} />
+              {/* dot */}
+              <div className={`w-4 h-4 rounded-full border-2 bg-[#0D0D0D] ${dotCls} shadow-lg shrink-0 mt-1`} />
+              {/* content */}
+              <div className="flex-1 pb-1">
+                <div className="flex items-baseline gap-3 mb-1">
+                  <span className={`font-mono text-xs font-bold ${numCls}`}>{num}</span>
+                  <span className="font-bold text-sm text-white uppercase tracking-wide">{label}</span>
+                </div>
+                <p className="text-sm text-white/60 leading-relaxed">{body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Setup note */}
+        <div className="w-full p-3 rounded-xl bg-white/5 border border-white/10 text-center">
+          <p className="text-xs font-mono text-white/30">
+            Watch projected via DevEco Studio emulator &nbsp;·&nbsp; GPS injected via emulator toolbar &nbsp;·&nbsp; Fall simulated via debug panel
+          </p>
+        </div>
+      </div>
+    ),
+  },
+
+  // =========================================================================
+  // SLIDE 4 — INNOVATION HIGHLIGHT
+  // =========================================================================
+  {
+    id: 'innovation',
+    title: 'Innovation Highlight',
+    subtitle: '"Briefly show your technical depth to build trust."',
+    content: (
+      <div className="flex flex-col w-full max-w-7xl gap-4">
+
+        {/* ── ML Fall Classifier band (~20% height) ── */}
+        <div className="w-full rounded-2xl bg-white/5 border border-purple-400/30 overflow-hidden shadow-[0_0_40px_-10px_rgba(192,132,255,0.2)]">
+          <div className="h-0.5 w-full bg-purple-400" />
+          <div className="p-4 space-y-3">
+
+            {/* headline row */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Brain className="w-5 h-5 text-purple-400" />
+                <span className="font-bold text-white">On-Device ML Fall Classifier</span>
+                <span className="text-xs font-mono text-purple-300/70">— Logistic Regression on SisFall</span>
+              </div>
+              <div className="flex items-center gap-3 text-[10px] font-mono text-purple-300">
+                {[['38', 'subjects'], ['15', 'fall types'], ['19', 'activities']].map(([v, l]) => (
+                  <div key={l} className="text-center bg-purple-400/10 border border-purple-400/20 rounded-lg px-2 py-1">
+                    <div className="text-purple-300 font-bold text-sm">{v}</div>
+                    <div className="text-white/30">{l}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* pipeline */}
+            <div className="flex items-center gap-1 flex-wrap text-[10px] font-mono text-white/40">
+              {['Raw accel ~5 Hz', 'Feature extraction', 'StandardScaler', 'Logistic Regression', 'Sigmoid', 'p(fall) ≥ 0.5', 'ALERT'].map((node, i, arr) => (
+                <React.Fragment key={node}>
+                  <span className={`px-2 py-0.5 rounded border ${i === arr.length - 1 ? 'text-red-300 border-red-400/30 bg-red-400/10' : i >= 3 ? 'text-purple-300 border-purple-400/20 bg-purple-400/10' : 'text-white/50 border-white/10 bg-white/5'}`}>
+                    {node}
+                  </span>
+                  {i < arr.length - 1 && <ArrowRight className="w-3 h-3 text-white/20 shrink-0" />}
+                </React.Fragment>
+              ))}
+            </div>
+
+            {/* 4 feature chips */}
+            <div className="grid grid-cols-4 gap-2">
+              {[
+                { name: 'impactPeak',    coef: '+5.98', coefCls: 'text-red-300',   note: 'peak G during impact' },
+                { name: 'preEnergy',     coef: '−0.69', coefCls: 'text-green-400', note: 'activity before impact' },
+                { name: 'postStillness', coef: '−0.31', coefCls: 'text-green-400', note: 'stillness after fall' },
+                { name: 'postVariance',  coef: '−0.76', coefCls: 'text-green-400', note: 'sustained stillness' },
+              ].map(({ name, coef, coefCls, note }) => (
+                <div key={name} className="bg-black/30 border border-purple-400/20 rounded-xl p-2.5 flex items-center justify-between gap-2">
+                  <div>
+                    <div className="text-[11px] font-mono font-bold text-sky-300">{name}</div>
+                    <div className="text-[10px] text-white/35 mt-0.5">{note}</div>
+                  </div>
+                  <div className={`text-sm font-bold font-mono ${coefCls} shrink-0`}>{coef}</div>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-[10px] font-mono text-white/25">
+              bias = +0.93 · coefficients learned via cross-entropy minimisation · all inference on-device, no cloud
+            </p>
+          </div>
+        </div>
+
+        {/* ── bottom row: other innovations + performance ── */}
+        <div className="grid grid-cols-2 gap-4 flex-1">
+
+          {/* Left: other innovations */}
+          <div className="rounded-2xl bg-white/5 border border-green-400/20 p-5 space-y-4">
+            <div className="text-[10px] font-mono text-green-400 uppercase tracking-widest font-bold border-b border-green-400/20 pb-2">
+              Other Innovations
+            </div>
+
+            {[
+              {
+                icon: <Navigation2 className="w-5 h-5 text-green-400" />,
+                title: 'Dual-Signal Geofencing',
+                body: 'GPS + accelerometer must both agree before an alert fires — eliminates false alarms from indoor GPS drift (±10–50 m).',
+              },
+              {
+                icon: <MapPin className="w-5 h-5 text-sky-300" />,
+                title: 'Haversine Distance Engine',
+                body: 'Great-circle formula for accurate 30–50 m distance. Bearing calculation drives the radar-dot direction indicator on the UI.',
+              },
+              {
+                icon: <Cpu className="w-5 h-5 text-purple-400" />,
+                title: 'Emulator / Device Abstraction',
+                body: 'MotionDetector and FallDetector are injected interfaces. AppConfig.IS_EMULATOR swaps Mock* ↔ Real* at compile time — zero runtime if-branches in business logic.',
+              },
+            ].map(({ icon, title, body }) => (
+              <div key={title} className="flex items-start gap-3">
+                <div className="p-2 rounded-xl bg-white/5 shrink-0">{icon}</div>
+                <div>
+                  <div className="font-bold text-sm text-white mb-0.5">{title}</div>
+                  <div className="text-xs text-white/50 leading-relaxed">{body}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Right: performance metrics */}
+          <div className="rounded-2xl bg-white/5 border border-amber-400/20 p-5 space-y-4">
+            <div className="text-[10px] font-mono text-amber-400 uppercase tracking-widest font-bold border-b border-amber-400/20 pb-2">
+              Performance &amp; Battery
+            </div>
+
+            <div className="space-y-2">
+              {[
+                { label: 'GPS — at rest',        val: '60 s poll interval',              cls: 'text-white/50' },
+                { label: 'GPS — while walking',   val: '10 s poll  (motion wake)',        cls: 'text-amber-300' },
+                { label: 'Accelerometer',         val: 'Continuous low-power step mode',  cls: 'text-green-400' },
+                { label: 'Pre-impact window',     val: '5 samples ≈ 1 s context',         cls: 'text-sky-300' },
+                { label: 'Post-impact window',    val: '10 samples ≈ 2 s confirmation',   cls: 'text-sky-300' },
+                { label: 'Fall threshold',        val: 'p ≥ 0.50  (tunable for recall)',  cls: 'text-purple-400' },
+                { label: 'Motion debounce',       val: '2 s — noise immune state flip',   cls: 'text-white/50' },
+              ].map(({ label, val, cls }) => (
+                <div key={label} className="flex items-center justify-between py-1.5 border-b border-white/5 last:border-0">
+                  <span className="text-xs text-white/50">{label}</span>
+                  <span className={`text-xs font-mono font-bold ${cls}`}>{val}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Tech stack pills */}
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {['ArkTS', '@ohos.sensor', '@ohos.geoLocationManager', '@ohos.vibrator', 'SisFall', 'Logistic Regression'].map((t) => (
+                <span key={t} className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-sky-400/10 border border-sky-400/20 text-sky-300">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    ),
+  },
+
+  // =========================================================================
+  // SLIDE 5 — THE DREAM TEAM
+  // =========================================================================
+  {
+    id: 'team',
+    title: 'The Dream Team',
+    subtitle: '"Leave the judges with a lasting impression of your passion."',
+    content: (
+      <div className="flex flex-col items-center w-full max-w-6xl gap-6">
+
+        {/* 3 team member cards */}
+        <div className="grid grid-cols-3 gap-6 w-full">
+          {[
+            {
+              name: 'Ujwal',
+              handle: 'The Sentinel',
+              role: 'Security & Data Lead',
+              accentCls: 'border-green-400/30',
+              stripCls: 'bg-green-400',
+              badgeCls: 'text-green-400 bg-green-400/10 border-green-400/20',
+              nameCls: 'text-green-400',
+              bio: 'MSc Cyber Security student & Former Data Scientist at Optum. Leveraging 3 years of industry experience to bridge data-driven insights with secure, agentic AI.',
+              credit: 'Built the dual-signal geofencing engine — GPS + accelerometer state machine, Haversine distance, and battery-adaptive GPS polling.',
+            },
+            {
+              name: 'Harshdeep',
+              handle: 'The Professor',
+              role: 'AI & Algorithms Lead',
+              accentCls: 'border-amber-400/30',
+              stripCls: 'bg-amber-400',
+              badgeCls: 'text-amber-400 bg-amber-400/10 border-amber-400/20',
+              nameCls: 'text-amber-300',
+              bio: 'MS in AI Candidate & Former Research Intern. Experience in Reinforcement Learning, Quantum Computing, and high-dimensional optimisation challenges.',
+              credit: 'Wired the smartwatch to the phone — push notifications, caregiver alerts, and real-time state sync between devices.',
+            },
+            {
+              name: 'Ardacandra',
+              handle: 'The Coder',
+              role: 'Engineering & UX Lead',
+              accentCls: 'border-sky-400/30',
+              stripCls: 'bg-sky-400',
+              badgeCls: 'text-sky-300 bg-sky-400/10 border-sky-400/20',
+              nameCls: 'text-sky-300',
+              bio: 'MS in AI Candidate & Former Data Scientist. Bridging 3 years of ML experience with privacy-centric, on-device optimisation for wearables.',
+              credit: 'Built the Community Card feature and trained the logistic regression on SisFall (38 subjects, 15 fall types) — wired into MLFallDetector.',
+            },
+          ].map(({ name, handle, role, accentCls, stripCls, badgeCls, nameCls, bio, credit }) => (
+            <div key={name} className={`rounded-2xl bg-white/5 border ${accentCls} flex flex-col overflow-hidden`}>
+              <div className={`h-1 ${stripCls}`} />
+              <div className="p-5 flex flex-col gap-4 flex-1">
+
+                {/* Photo placeholder */}
+                <div className={`w-full h-32 rounded-xl bg-black/30 border ${accentCls} flex items-center justify-center`}>
+                  <div className="text-center">
+                    <Users className="w-8 h-8 text-white/20 mx-auto" />
+                    <div className="text-[10px] font-mono text-white/20 mt-1">[ Photo ]</div>
+                  </div>
+                </div>
+
+                {/* Name + role */}
+                <div>
+                  <h3 className={`text-xl font-bold font-display ${nameCls}`}>{name}</h3>
+                  <div className="flex items-center gap-2 mt-1 flex-wrap">
+                    <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${badgeCls}`}>
+                      {handle}
+                    </span>
+                    <span className="text-[10px] text-white/30">{role}</span>
+                  </div>
+                </div>
+
+                {/* Bio */}
+                <p className="text-xs text-white/50 leading-relaxed">{bio}</p>
+
+                {/* Credit */}
+                <div className={`mt-auto pt-3 border-t border-white/10`}>
+                  <div className="text-[9px] font-mono text-white/30 uppercase tracking-widest mb-1">Why this team</div>
+                  <p className="text-xs text-white/70 leading-relaxed">{credit}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Vision statement */}
+        <div className="w-full p-5 rounded-2xl bg-green-400/5 border border-green-400/20 text-center relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(74,222,128,0.05),transparent_70%)] pointer-events-none" />
+          <Heart className="w-5 h-5 text-green-400 mx-auto mb-2" />
+          <p className="text-sm font-bold text-white relative z-10">
+            Our Vision — A world where seniors explore their neighbourhood freely,
+          </p>
+          <p className="text-sm text-green-400 italic font-light mt-1 relative z-10">
+            knowing ANCHOR is silently watching, so their families don't have to.
+          </p>
+        </div>
+      </div>
+    ),
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Main App
+// ---------------------------------------------------------------------------
+export default function App() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [direction, setDirection] = useState(0);
+
+  const nextSlide = useCallback(() => {
+    if (currentSlide < slides.length - 1) {
+      setDirection(1);
+      setCurrentSlide((s) => s + 1);
+    }
+  }, [currentSlide]);
+
+  const prevSlide = useCallback(() => {
+    if (currentSlide > 0) {
+      setDirection(-1);
+      setCurrentSlide((s) => s - 1);
+    }
+  }, [currentSlide]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (['INPUT', 'TEXTAREA'].includes((e.target as HTMLElement).tagName)) return;
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+      if (e.key === 'ArrowLeft') prevSlide();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [nextSlide, prevSlide]);
+
+  const slide = slides[currentSlide];
+
+  return (
+    <>
+      <div className="min-h-screen bg-[#0D0D0D] text-white relative overflow-hidden font-sans">
+
+        {/* Background glow */}
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(74,222,128,0.06),transparent_60%)]" />
+          <div className="absolute bottom-0 left-0 right-0 h-[50vh] bg-gradient-to-t from-[#0D0D0D]/90 to-transparent" />
+        </div>
+
+        {/* Header */}
+        <header className="fixed top-0 left-0 w-full px-8 py-5 flex justify-between items-center z-50">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-green-500/20 border border-green-400/30 flex items-center justify-center shadow-lg shadow-green-500/10">
+              <Anchor className="w-4 h-4 text-green-400" />
+            </div>
+            <span className="font-display font-bold tracking-tight text-lg text-white">ANCHOR</span>
+          </div>
+          <div className="hidden md:flex items-center gap-4">
+            <span className="text-xs font-mono text-white/20 uppercase tracking-[0.2em]">
+              {slide.subtitle}
+            </span>
+            <div className="flex items-center gap-1">
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => { setDirection(i > currentSlide ? 1 : -1); setCurrentSlide(i); }}
+                  className={`w-1.5 h-1.5 rounded-full transition-all ${i === currentSlide ? 'bg-green-400 w-4' : 'bg-white/20 hover:bg-white/40'}`}
+                />
+              ))}
+            </div>
+          </div>
+        </header>
+
+        {/* Slide title */}
+        <div className="fixed top-16 left-8 z-40">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 8 }}
+              transition={{ duration: 0.25 }}
+            >
+              <div className="flex items-center gap-2 text-xs font-mono text-green-400/60 uppercase tracking-widest mb-0.5">
+                <span>{String(currentSlide + 1).padStart(2, '0')}</span>
+                <span className="text-white/15">/</span>
+                <span className="text-white/20">{String(slides.length).padStart(2, '0')}</span>
+              </div>
+              <h2 className="text-lg font-display font-bold text-white/80">{slide.title}</h2>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Main slides */}
+        <main className="relative z-10 w-full h-screen overflow-hidden flex items-center justify-center pt-24 pb-16 px-8">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={currentSlide}
+              custom={direction}
+              initial={{ x: direction * 60, opacity: 0, scale: 0.98 }}
+              animate={{ x: 0, opacity: 1, scale: 1 }}
+              exit={{ x: direction * -60, opacity: 0, scale: 1.02 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="w-full flex items-center justify-center"
+            >
+              {slide.content}
+            </motion.div>
+          </AnimatePresence>
+        </main>
+
+        <Navigation onPrev={prevSlide} onNext={nextSlide} current={currentSlide} total={slides.length} />
+        <ProgressBar current={currentSlide} total={slides.length} />
+      </div>
+    </>
+  );
+}
