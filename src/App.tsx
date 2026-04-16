@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import slide1Bg from './assets/backgrounds/slide_1_background.jpeg';
+import uiMainMenu from './assets/screenshots/ui_main_menu.png';
+import uiMobileApp from './assets/screenshots/ui_mobile_app.png';
+import uiGeofence from './assets/screenshots/ui_geofence.mp4';
+import uiCommunityCard from './assets/screenshots/ui_community_card.mp4';
 import {
   ChevronLeft,
   ChevronRight,
@@ -12,10 +16,10 @@ import {
   Users,
   Zap,
   ArrowRight,
-  Clock,
+
   Heart,
   Navigation2,
-  ScanLine,
+
   Cpu,
   Play,
 } from 'lucide-react';
@@ -154,94 +158,83 @@ const slides: Slide[] = [
   {
     id: 'craftsmanship',
     title: 'The Craftsmanship',
-    subtitle: '"Show us that you care about the user\'s feelings."',
+    subtitle: undefined,
     content: (
-      <div className="flex flex-col w-full max-w-7xl gap-5">
+      <div className="flex flex-col w-full max-w-7xl gap-4">
 
         {/* 4 screen cards */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 gap-3">
           {[
             {
-              title: 'Setup Screen',
-              badge: 'CAREGIVER SETUP',
-              color: 'green',
-              borderCls: 'border-green-400/30',
+              title: 'Main Menu',
+              badge: 'WATCH UI',
+              accentCls: 'border-green-400/25',
               badgeCls: 'text-green-400 bg-green-400/10 border-green-400/20',
               stripCls: 'bg-green-400',
-              bullets: [
-                'Large "Set Home Point" button',
-                'Plain-language explanation',
-                'Patient name input',
-                'High-contrast dark theme',
-              ],
+              media: <img src={uiMainMenu} alt="Main menu" className="w-full h-full object-cover" />,
+              tags: ['High-contrast colours', 'Large tap targets', 'Clear status badge'],
             },
             {
-              title: 'Home Screen',
-              badge: 'REAL-TIME STATUS',
-              color: 'amber',
-              borderCls: 'border-amber-400/30',
+              title: 'Geofencing',
+              badge: 'LIVE TRACKING',
+              accentCls: 'border-amber-400/25',
               badgeCls: 'text-amber-400 bg-amber-400/10 border-amber-400/20',
               stripCls: 'bg-amber-400',
-              bullets: [
-                'Colour-coded SAFE/DRIFT/ALERT badge',
-                'Distance readout in metres',
-                'Radar dot shows direction',
-                'Last-updated timestamp',
-              ],
-            },
-            {
-              title: 'Alert View',
-              badge: 'ALERT STATE',
-              color: 'red',
-              borderCls: 'border-red-400/30',
-              badgeCls: 'text-red-400 bg-red-400/10 border-red-400/20',
-              stripCls: 'bg-red-400',
-              bullets: [
-                'Full-screen red overlay',
-                'Distance + GPS coordinates',
-                '3-pulse haptic on watch',
-                'Push notification to caregiver',
-              ],
+              media: (
+                <video
+                  src={uiGeofence}
+                  autoPlay loop muted playsInline
+                  className="w-full h-full object-cover"
+                />
+              ),
+              tags: ['Animated drift indicator', 'Distance in large text', 'Colour-coded state'],
             },
             {
               title: 'Community Card',
               badge: 'ON-WATCH ID',
-              color: 'sky',
-              borderCls: 'border-sky-400/30',
+              accentCls: 'border-sky-400/25',
               badgeCls: 'text-sky-300 bg-sky-400/10 border-sky-400/20',
               stripCls: 'bg-sky-400',
-              bullets: [
-                'Swipeable pages on watch',
-                'Tap-to-call emergency contact',
-                'Medical summary & allergies',
-                'Editable by caregiver',
-              ],
+              media: (
+                <video
+                  src={uiCommunityCard}
+                  autoPlay loop muted playsInline
+                  className="w-full h-full object-cover"
+                />
+              ),
+              tags: ['Smooth swipe transitions', 'Tap-to-call contact', 'Medical info on wrist'],
             },
-          ].map((s) => (
-            <div key={s.title} className={`rounded-2xl bg-white/5 border ${s.borderCls} flex flex-col overflow-hidden`}>
-              {/* colour strip */}
-              <div className={`h-1 w-full ${s.stripCls}`} />
+            {
+              title: 'Mobile App',
+              badge: 'CAREGIVER',
+              accentCls: 'border-purple-400/25',
+              badgeCls: 'text-purple-300 bg-purple-400/10 border-purple-400/20',
+              stripCls: 'bg-purple-400',
+              media: <img src={uiMobileApp} alt="Mobile app" className="w-full h-full object-cover" />,
+              tags: ['Push alert on drift', 'One-tap call back', 'Real-time GPS view'],
+            },
+          ].map(({ title, badge, accentCls, badgeCls, stripCls, media, tags }) => (
+            <div key={title} className={`rounded-2xl bg-white/5 border ${accentCls} flex flex-col overflow-hidden`}>
+              <div className={`h-0.5 w-full ${stripCls}`} />
 
-              <div className="p-4 flex flex-col gap-3 flex-1">
-                <div>
-                  <h3 className="font-bold text-sm text-white">{s.title}</h3>
-                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${s.badgeCls} mt-1 inline-block uppercase tracking-wider`}>
-                    {s.badge}
+              {/* Media */}
+              <div className="relative w-full aspect-[4/5] bg-black overflow-hidden">
+                {media}
+              </div>
+
+              {/* Label */}
+              <div className="p-2.5 flex flex-col gap-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-xs text-white">{title}</span>
+                  <span className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border ${badgeCls} uppercase tracking-wider`}>
+                    {badge}
                   </span>
                 </div>
-
-                {/* Screenshot placeholder */}
-                <div className={`rounded-xl bg-black/30 border ${s.borderCls} h-28 flex items-center justify-center`}>
-                  <ScanLine className="w-6 h-6 text-white/20" />
-                  <span className="text-[10px] text-white/20 ml-2 font-mono">[ Screenshot ]</span>
-                </div>
-
-                {/* Bullets */}
-                <ul className="space-y-1.5">
-                  {s.bullets.map((b) => (
-                    <li key={b} className="flex items-start gap-2 text-[11px] text-white/60">
-                      <div className={`w-1 h-1 rounded-full mt-1.5 shrink-0 ${s.stripCls}`} />
-                      {b}
+                <ul className="space-y-0.5">
+                  {tags.map((t) => (
+                    <li key={t} className="flex items-center gap-1.5 text-[9px] text-white/45">
+                      <div className={`w-1 h-1 rounded-full shrink-0 ${stripCls}`} />
+                      {t}
                     </li>
                   ))}
                 </ul>
@@ -250,18 +243,18 @@ const slides: Slide[] = [
           ))}
         </div>
 
-        {/* Interaction highlights */}
-        <div className="grid grid-cols-3 gap-4">
+        {/* Bottom highlight bar */}
+        <div className="grid grid-cols-3 gap-3">
           {[
-            { icon: <Vibrate className="w-5 h-5 text-green-400" />, title: 'Haptic Patterns', body: 'Gentle 1-pulse on DRIFT · 3 firm pulses on ALERT · Silent on SAFE' },
-            { icon: <Zap className="w-5 h-5 text-sky-300" />,   title: 'Smooth Animations', body: '260 ms Swiper slide transitions between Community Card pages' },
-            { icon: <Clock className="w-5 h-5 text-amber-400" />, title: 'Battery Adaptive',  body: 'GPS slows to 60 s poll when patient is still — 10 s when walking' },
+            { icon: <Zap className="w-4 h-4 text-green-400" />,    title: 'Smooth Animations',   body: 'Swiper transitions at 260 ms — fluid enough to feel responsive, slow enough for elderly users.' },
+            { icon: <Vibrate className="w-4 h-4 text-sky-300" />,  title: 'Haptic Feedback',      body: '1 gentle pulse on drift · 3 firm pulses on alert — no need to look at the screen.' },
+            { icon: <Users className="w-4 h-4 text-amber-400" />,  title: 'Elderly-First Design', body: 'High-contrast dark theme, large text, minimal steps — usable without reading glasses.' },
           ].map(({ icon, title, body }) => (
-            <div key={title} className="flex items-start gap-3 p-4 rounded-2xl bg-white/5 border border-white/10">
-              <div className="p-2 rounded-xl bg-white/5 shrink-0">{icon}</div>
+            <div key={title} className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
+              <div className="p-1.5 rounded-lg bg-white/5 shrink-0">{icon}</div>
               <div>
-                <div className="font-bold text-sm text-white mb-1">{title}</div>
-                <div className="text-xs text-white/50 leading-relaxed">{body}</div>
+                <div className="font-bold text-xs text-white mb-0.5">{title}</div>
+                <div className="text-[11px] text-white/45 leading-relaxed">{body}</div>
               </div>
             </div>
           ))}
