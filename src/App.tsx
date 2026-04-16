@@ -15,7 +15,7 @@ import {
   Brain,
   Users,
   Zap,
-  ArrowRight,
+
 
   Heart,
   Navigation2,
@@ -297,137 +297,114 @@ const slides: Slide[] = [
   {
     id: 'innovation',
     title: 'Innovation Highlight',
-    subtitle: '"Briefly show your technical depth to build trust."',
+    subtitle: undefined,
     content: (
-      <div className="flex flex-col w-full max-w-7xl gap-4">
+      <div className="grid grid-cols-2 gap-4 w-full max-w-7xl">
 
-        {/* ── ML Fall Classifier band (~20% height) ── */}
-        <div className="w-full rounded-2xl bg-white/5 border border-purple-400/30 overflow-hidden shadow-[0_0_40px_-10px_rgba(192,132,255,0.2)]">
-          <div className="h-0.5 w-full bg-purple-400" />
-          <div className="p-4 space-y-3">
-
-            {/* headline row */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Brain className="w-5 h-5 text-purple-400" />
-                <span className="font-bold text-white">On-Device ML Fall Classifier</span>
-                <span className="text-xs font-mono text-purple-300/70">— Logistic Regression on SisFall</span>
-              </div>
-              <div className="flex items-center gap-3 text-[10px] font-mono text-purple-300">
-                {[['38', 'subjects'], ['15', 'fall types'], ['19', 'activities']].map(([v, l]) => (
-                  <div key={l} className="text-center bg-purple-400/10 border border-purple-400/20 rounded-lg px-2 py-1">
-                    <div className="text-purple-300 font-bold text-sm">{v}</div>
-                    <div className="text-white/30">{l}</div>
-                  </div>
-                ))}
-              </div>
+        {/* ── 1. ML Fall Classifier ── */}
+        <div className="rounded-2xl bg-white/5 border border-purple-400/25 p-5 flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-purple-400/10 shrink-0">
+              <Brain className="w-5 h-5 text-purple-400" />
             </div>
-
-            {/* pipeline */}
-            <div className="flex items-center gap-1 flex-wrap text-[10px] font-mono text-white/40">
-              {['Raw accel ~5 Hz', 'Feature extraction', 'StandardScaler', 'Logistic Regression', 'Sigmoid', 'p(fall) ≥ 0.5', 'ALERT'].map((node, i, arr) => (
-                <React.Fragment key={node}>
-                  <span className={`px-2 py-0.5 rounded border ${i === arr.length - 1 ? 'text-red-300 border-red-400/30 bg-red-400/10' : i >= 3 ? 'text-purple-300 border-purple-400/20 bg-purple-400/10' : 'text-white/50 border-white/10 bg-white/5'}`}>
-                    {node}
-                  </span>
-                  {i < arr.length - 1 && <ArrowRight className="w-3 h-3 text-white/20 shrink-0" />}
-                </React.Fragment>
-              ))}
+            <div>
+              <div className="font-bold text-white">On-Device Fall Detection</div>
+              <div className="text-[10px] text-purple-300/60 mt-0.5">ML model · runs entirely on the watch</div>
             </div>
-
-            {/* 4 feature chips */}
-            <div className="grid grid-cols-4 gap-2">
-              {[
-                { name: 'impactPeak',    coef: '+5.98', coefCls: 'text-red-300',   note: 'peak G during impact' },
-                { name: 'preEnergy',     coef: '−0.69', coefCls: 'text-green-400', note: 'activity before impact' },
-                { name: 'postStillness', coef: '−0.31', coefCls: 'text-green-400', note: 'stillness after fall' },
-                { name: 'postVariance',  coef: '−0.76', coefCls: 'text-green-400', note: 'sustained stillness' },
-              ].map(({ name, coef, coefCls, note }) => (
-                <div key={name} className="bg-black/30 border border-purple-400/20 rounded-xl p-2.5 flex items-center justify-between gap-2">
-                  <div>
-                    <div className="text-[11px] font-mono font-bold text-sky-300">{name}</div>
-                    <div className="text-[10px] text-white/35 mt-0.5">{note}</div>
-                  </div>
-                  <div className={`text-sm font-bold font-mono ${coefCls} shrink-0`}>{coef}</div>
-                </div>
-              ))}
-            </div>
-
-            <p className="text-[10px] font-mono text-white/25">
-              bias = +0.93 · coefficients learned via cross-entropy minimisation · all inference on-device, no cloud
-            </p>
           </div>
-        </div>
-
-        {/* ── bottom row: other innovations + performance ── */}
-        <div className="grid grid-cols-2 gap-4 flex-1">
-
-          {/* Left: other innovations */}
-          <div className="rounded-2xl bg-white/5 border border-green-400/20 p-5 space-y-4">
-            <div className="text-[10px] font-mono text-green-400 uppercase tracking-widest font-bold border-b border-green-400/20 pb-2">
-              Other Innovations
-            </div>
-
-            {[
-              {
-                icon: <Navigation2 className="w-5 h-5 text-green-400" />,
-                title: 'Dual-Signal Geofencing',
-                body: 'GPS + accelerometer must both agree before an alert fires — eliminates false alarms from indoor GPS drift (±10–50 m).',
-              },
-              {
-                icon: <MapPin className="w-5 h-5 text-sky-300" />,
-                title: 'Haversine Distance Engine',
-                body: 'Great-circle formula for accurate 30–50 m distance. Bearing calculation drives the radar-dot direction indicator on the UI.',
-              },
-              {
-                icon: <Cpu className="w-5 h-5 text-purple-400" />,
-                title: 'Emulator / Device Abstraction',
-                body: 'MotionDetector and FallDetector are injected interfaces. AppConfig.IS_EMULATOR swaps Mock* ↔ Real* at compile time — zero runtime if-branches in business logic.',
-              },
-            ].map(({ icon, title, body }) => (
-              <div key={title} className="flex items-start gap-3">
-                <div className="p-2 rounded-xl bg-white/5 shrink-0">{icon}</div>
-                <div>
-                  <div className="font-bold text-sm text-white mb-0.5">{title}</div>
-                  <div className="text-xs text-white/50 leading-relaxed">{body}</div>
-                </div>
+          <p className="text-sm text-white/55 leading-relaxed">
+            A Logistic Regression model trained on the SisFall dataset (38 subjects) detects falls by recognising a sharp impact followed by prolonged stillness — all processed on the watch itself, with no internet required.
+          </p>
+          <div className="grid grid-cols-3 gap-2 mt-auto">
+            {[['38', 'subjects'], ['15', 'fall types'], ['&lt;10 s', 'to alert']].map(([val, label]) => (
+              <div key={label} className="bg-black/20 border border-purple-400/15 rounded-lg p-2 text-center">
+                <div className="text-sm font-bold text-purple-300" dangerouslySetInnerHTML={{ __html: val }} />
+                <div className="text-[9px] text-white/30 mt-0.5">{label}</div>
               </div>
             ))}
           </div>
+        </div>
 
-          {/* Right: performance metrics */}
-          <div className="rounded-2xl bg-white/5 border border-amber-400/20 p-5 space-y-4">
-            <div className="text-[10px] font-mono text-amber-400 uppercase tracking-widest font-bold border-b border-amber-400/20 pb-2">
-              Performance &amp; Battery
+        {/* ── 2. Dual-Signal Geofencing ── */}
+        <div className="rounded-2xl bg-white/5 border border-green-400/25 p-5 flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-green-400/10 shrink-0">
+              <Navigation2 className="w-5 h-5 text-green-400" />
             </div>
-
-            <div className="space-y-2">
-              {[
-                { label: 'GPS — at rest',        val: '60 s poll interval',              cls: 'text-white/50' },
-                { label: 'GPS — while walking',   val: '10 s poll  (motion wake)',        cls: 'text-amber-300' },
-                { label: 'Accelerometer',         val: 'Continuous low-power step mode',  cls: 'text-green-400' },
-                { label: 'Pre-impact window',     val: '5 samples ≈ 1 s context',         cls: 'text-sky-300' },
-                { label: 'Post-impact window',    val: '10 samples ≈ 2 s confirmation',   cls: 'text-sky-300' },
-                { label: 'Fall threshold',        val: 'p ≥ 0.50  (tunable for recall)',  cls: 'text-purple-400' },
-                { label: 'Motion debounce',       val: '2 s — noise immune state flip',   cls: 'text-white/50' },
-              ].map(({ label, val, cls }) => (
-                <div key={label} className="flex items-center justify-between py-1.5 border-b border-white/5 last:border-0">
-                  <span className="text-xs text-white/50">{label}</span>
-                  <span className={`text-xs font-mono font-bold ${cls}`}>{val}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Tech stack pills */}
-            <div className="flex flex-wrap gap-1.5 pt-1">
-              {['ArkTS', '@ohos.sensor', '@ohos.geoLocationManager', '@ohos.vibrator', 'SisFall', 'Logistic Regression'].map((t) => (
-                <span key={t} className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-sky-400/10 border border-sky-400/20 text-sky-300">
-                  {t}
-                </span>
-              ))}
+            <div>
+              <div className="font-bold text-white">Dual-Signal Geofencing</div>
+              <div className="text-[10px] text-green-400/60 mt-0.5">GPS + motion sensor · no false alarms</div>
             </div>
           </div>
+          <p className="text-sm text-white/55 leading-relaxed">
+            An alert only triggers when both GPS distance and motion sensor agree the senior has left the safe zone — preventing false alarms caused by GPS signal drift indoors.
+          </p>
+          <div className="grid grid-cols-3 gap-2 mt-auto">
+            {[
+              { label: 'Safe',     val: '< 30 m',  cls: 'text-green-400' },
+              { label: 'Drifting', val: '30–50 m', cls: 'text-amber-400' },
+              { label: 'Alert',    val: '> 50 m',  cls: 'text-red-400'   },
+            ].map(({ label, val, cls }) => (
+              <div key={label} className="bg-black/20 border border-white/10 rounded-lg p-2 text-center">
+                <div className={`text-sm font-bold ${cls}`}>{val}</div>
+                <div className="text-[9px] text-white/30 mt-0.5">{label}</div>
+              </div>
+            ))}
+          </div>
         </div>
+
+        {/* ── 3. Haversine Distance Engine ── */}
+        <div className="rounded-2xl bg-white/5 border border-sky-400/25 p-5 flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-sky-400/10 shrink-0">
+              <MapPin className="w-5 h-5 text-sky-300" />
+            </div>
+            <div>
+              <div className="font-bold text-white">Haversine Distance Engine</div>
+              <div className="text-[10px] text-sky-300/60 mt-0.5">Accurate to metres · shows direction</div>
+            </div>
+          </div>
+          <p className="text-sm text-white/55 leading-relaxed">
+            Distance from the anchor point is calculated using the curvature of the Earth, giving metre-level accuracy. The bearing is also computed to show caregivers which direction the senior has moved.
+          </p>
+          <div className="grid grid-cols-2 gap-2 mt-auto">
+            {[['Metre-level', 'distance accuracy'], ['Live bearing', 'direction on watch']].map(([val, label]) => (
+              <div key={label} className="bg-black/20 border border-sky-400/15 rounded-lg p-2 text-center">
+                <div className="text-sm font-bold text-sky-300">{val}</div>
+                <div className="text-[9px] text-white/30 mt-0.5">{label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── 4. Performance & Battery ── */}
+        <div className="rounded-2xl bg-white/5 border border-amber-400/25 p-5 flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-amber-400/10 shrink-0">
+              <Cpu className="w-5 h-5 text-amber-400" />
+            </div>
+            <div>
+              <div className="font-bold text-white">Performance &amp; Battery</div>
+              <div className="text-[10px] text-amber-400/60 mt-0.5">Adaptive polling · built for all-day wear</div>
+            </div>
+          </div>
+          <p className="text-sm text-white/55 leading-relaxed">
+            Location updates slow down when the senior is still and speed up when they start walking — conserving battery without sacrificing responsiveness.
+          </p>
+          <div className="space-y-1.5 mt-auto">
+            {[
+              { label: 'GPS while still',    val: 'Every 60 s',   cls: 'text-white/50'  },
+              { label: 'GPS while walking',  val: 'Every 10 s',   cls: 'text-amber-300' },
+              { label: 'Fall confirmation',  val: '~3 s window',  cls: 'text-sky-300'   },
+            ].map(({ label, val, cls }) => (
+              <div key={label} className="flex items-center justify-between py-1.5 border-b border-white/5 last:border-0">
+                <span className="text-xs text-white/45">{label}</span>
+                <span className={`text-xs font-bold ${cls}`}>{val}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     ),
   },
