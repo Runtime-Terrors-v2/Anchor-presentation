@@ -1,27 +1,29 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import slide1Bg from './assets/backgrounds/slide_1_background.jpeg';
+import uiMainMenu from './assets/screenshots/ui_main_menu.png';
+import uiMobileApp from './assets/screenshots/ui_mobile_app.png';
+import uiGeofence from './assets/screenshots/ui_geofence.mp4';
+import uiCommunityCard from './assets/screenshots/ui_community_card.mp4';
+import photoUjwal from './assets/team/photo_ujwal.jpg';
+import photoHarshdeep from './assets/team/photo_harshdeep.jpeg';
+import photoArda from './assets/team/photo_arda.jpg';
 import {
   ChevronLeft,
   ChevronRight,
   Anchor,
   MapPin,
-  Activity,
   AlertTriangle,
-  ShieldCheck,
   Vibrate,
   Brain,
   Users,
   Zap,
-  ArrowRight,
-  CheckCircle2,
-  Clock,
-  Smartphone,
-  Watch,
+
+
   Heart,
   Navigation2,
-  ScanLine,
+
   Cpu,
-  Database,
   Play,
 } from 'lucide-react';
 
@@ -78,24 +80,6 @@ const Navigation = ({
 // Slide content helpers
 // ---------------------------------------------------------------------------
 
-// Drift state badge
-const DriftBadge = ({ state }: { state: 'SAFE' | 'DRIFTING' | 'ALERT' }) => {
-  const cfg = {
-    SAFE:     { bg: 'bg-green-400/20',  border: 'border-green-400/50',  text: 'text-green-300',  dot: 'bg-green-400',  sub: '< 30 m'  },
-    DRIFTING: { bg: 'bg-amber-400/20',  border: 'border-amber-400/50',  text: 'text-amber-300',  dot: 'bg-amber-400',  sub: '30–50 m' },
-    ALERT:    { bg: 'bg-red-400/20',    border: 'border-red-400/50',    text: 'text-red-300',    dot: 'bg-red-400',    sub: '> 50 m'  },
-  }[state];
-  return (
-    <div className={`flex items-center gap-2 px-3 py-2 rounded-xl border ${cfg.bg} ${cfg.border}`}>
-      <div className={`w-2 h-2 rounded-full ${cfg.dot} shadow-lg`} />
-      <div>
-        <div className={`text-xs font-bold font-mono ${cfg.text}`}>{state}</div>
-        <div className="text-[10px] text-white/40">{cfg.sub}</div>
-      </div>
-    </div>
-  );
-};
-
 // ---------------------------------------------------------------------------
 // Slides
 // ---------------------------------------------------------------------------
@@ -108,91 +92,63 @@ const slides: Slide[] = [
   {
     id: 'hook',
     title: 'The Hook',
-    subtitle: '"Capture our hearts before you capture our minds."',
+    subtitle: undefined,
     content: (
-      <div className="grid lg:grid-cols-2 gap-12 items-center w-full max-w-7xl">
+      <div className="grid grid-cols-2 w-full max-w-7xl">
 
-        {/* LEFT — identity + problem */}
-        <div className="space-y-6">
-          {/* eyebrow */}
-          <div className="flex items-center gap-3 text-white/30 font-mono text-xs uppercase tracking-widest">
-            <span>Local Lifestyle Track</span>
-            <div className="w-1 h-1 rounded-full bg-white/20" />
-            <span>Team Runtime Terrors</span>
+        {/* LEFT — empty, lets the person show through */}
+        <div />
+
+        {/* RIGHT — all content */}
+        <div className="flex flex-col gap-7 text-left pl-12">
+
+          {/* Logo + eyebrow */}
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-white/5 border border-green-400/30 flex items-center justify-center shadow-[0_0_40px_-8px_rgba(74,222,128,0.4)]">
+              <Anchor className="w-7 h-7 text-green-400" />
+            </div>
+            <div className="flex items-center gap-2 text-white/30 font-mono text-xs uppercase tracking-widest">
+              <span>Local Lifestyle Track</span>
+              <div className="w-1 h-1 rounded-full bg-white/20" />
+              <span>Team Runtime Terrors</span>
+            </div>
           </div>
 
-          {/* title */}
-          <div>
-            <p className="text-green-400 font-mono text-sm uppercase tracking-[0.3em] mb-1">Project</p>
-            <h1 className="text-7xl md:text-8xl font-display font-bold tracking-tighter text-white leading-none">
+          {/* Title */}
+          <div className="space-y-2">
+            <p className="text-green-400 font-mono text-sm uppercase tracking-[0.3em]">Project</p>
+            <h1 className="text-8xl font-display font-bold tracking-tighter text-white leading-none">
               ANCHOR
             </h1>
-            <p className="mt-3 text-white/50 text-base italic font-light">
+            <p className="text-white/40 text-base italic font-light">
               "Your neighbourhood, always within reach."
             </p>
           </div>
 
-          {/* who */}
-          <div className="p-5 rounded-2xl bg-white/5 border border-white/10">
-            <div className="flex items-center gap-2 mb-2 text-sky-300 font-bold text-sm uppercase tracking-wider">
-              <Users className="w-4 h-4" /> Who is this for?
-            </div>
-            <p className="text-white/70 text-sm leading-relaxed">
-              Active seniors (60+) who desire to explore local hubs
-              independently — without constant worry or supervision.
-            </p>
-          </div>
+          <div className="w-12 h-px bg-green-400/30" />
 
-          {/* pain point */}
-          <div className="p-5 rounded-2xl bg-amber-400/5 border border-amber-400/20">
-            <div className="flex items-center gap-2 mb-2 text-amber-300 font-bold text-sm uppercase tracking-wider">
-              <AlertTriangle className="w-4 h-4" /> The Pain Point
-            </div>
-            <p className="text-white/70 text-sm leading-relaxed">
-              Seniors limit outings due to fear of disorientation —
-              causing <strong className="text-white">social isolation</strong> and{' '}
-              <strong className="text-white">over-protection</strong> from well-meaning families.
-            </p>
-          </div>
-        </div>
-
-        {/* RIGHT — logo + stats + states */}
-        <div className="flex flex-col items-center gap-6">
-
-          {/* Logo placeholder */}
-          <div className="w-36 h-36 rounded-3xl bg-white/5 border-2 border-green-400/30 flex flex-col items-center justify-center gap-2 shadow-[0_0_60px_-10px_rgba(74,222,128,0.3)]">
-            <Anchor className="w-14 h-14 text-green-400" />
-            <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">[ logo ]</span>
-          </div>
-
-          {/* Stat chips */}
-          <div className="grid grid-cols-3 gap-3 w-full max-w-sm">
-            {[
-              { val: '60+',    sub: 'Target age' },
-              { val: '2',      sub: 'Signals fused' },
-              { val: '<10 s',  sub: 'Alert speed' },
-            ].map(({ val, sub }) => (
-              <div key={val} className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
-                <div className="text-2xl font-bold text-green-400 font-display">{val}</div>
-                <div className="text-[10px] text-white/40 mt-0.5">{sub}</div>
+          {/* Info cards */}
+          <div className="flex flex-col gap-3">
+            <div className="p-5 rounded-2xl bg-white/5 border border-white/10">
+              <div className="flex items-center gap-2 mb-2 text-sky-300 font-bold text-sm uppercase tracking-wider">
+                <Users className="w-4 h-4" /> Who is this for?
               </div>
-            ))}
-          </div>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Active seniors (60+) who desire to explore local hubs
+                independently — without constant worry or supervision.
+              </p>
+            </div>
 
-          {/* Drift state badges */}
-          <div className="w-full max-w-sm space-y-2">
-            <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest text-center mb-3">
-              Drift States
-            </p>
-            <DriftBadge state="SAFE" />
-            <DriftBadge state="DRIFTING" />
-            <DriftBadge state="ALERT" />
-          </div>
-
-          {/* Platform */}
-          <div className="flex items-center gap-2 text-xs font-mono text-white/25 uppercase tracking-widest">
-            <Watch className="w-4 h-4" />
-            <span>HarmonyOS · Huawei Watch · ArkTS</span>
+            <div className="p-5 rounded-2xl bg-amber-400/5 border border-amber-400/20">
+              <div className="flex items-center gap-2 mb-2 text-amber-300 font-bold text-sm uppercase tracking-wider">
+                <AlertTriangle className="w-4 h-4" /> The Pain Point
+              </div>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Seniors limit outings due to fear of disorientation —
+                causing <strong className="text-white">social isolation</strong> and{' '}
+                <strong className="text-white">over-protection</strong> from well-meaning families.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -205,94 +161,83 @@ const slides: Slide[] = [
   {
     id: 'craftsmanship',
     title: 'The Craftsmanship',
-    subtitle: '"Show us that you care about the user\'s feelings."',
+    subtitle: undefined,
     content: (
-      <div className="flex flex-col w-full max-w-7xl gap-5">
+      <div className="flex flex-col w-full max-w-7xl gap-4">
 
         {/* 4 screen cards */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 gap-3">
           {[
             {
-              title: 'Setup Screen',
-              badge: 'CAREGIVER SETUP',
-              color: 'green',
-              borderCls: 'border-green-400/30',
+              title: 'Main Menu',
+              badge: 'WATCH UI',
+              accentCls: 'border-green-400/25',
               badgeCls: 'text-green-400 bg-green-400/10 border-green-400/20',
               stripCls: 'bg-green-400',
-              bullets: [
-                'Large "Set Home Point" button',
-                'Plain-language explanation',
-                'Patient name input',
-                'High-contrast dark theme',
-              ],
+              media: <img src={uiMainMenu} alt="Main menu" className="w-full h-full object-cover" />,
+              tags: ['High-contrast colours', 'Large tap targets', 'Clear status badge'],
             },
             {
-              title: 'Home Screen',
-              badge: 'REAL-TIME STATUS',
-              color: 'amber',
-              borderCls: 'border-amber-400/30',
+              title: 'Geofencing',
+              badge: 'LIVE TRACKING',
+              accentCls: 'border-amber-400/25',
               badgeCls: 'text-amber-400 bg-amber-400/10 border-amber-400/20',
               stripCls: 'bg-amber-400',
-              bullets: [
-                'Colour-coded SAFE/DRIFT/ALERT badge',
-                'Distance readout in metres',
-                'Radar dot shows direction',
-                'Last-updated timestamp',
-              ],
-            },
-            {
-              title: 'Alert View',
-              badge: 'ALERT STATE',
-              color: 'red',
-              borderCls: 'border-red-400/30',
-              badgeCls: 'text-red-400 bg-red-400/10 border-red-400/20',
-              stripCls: 'bg-red-400',
-              bullets: [
-                'Full-screen red overlay',
-                'Distance + GPS coordinates',
-                '3-pulse haptic on watch',
-                'Push notification to caregiver',
-              ],
+              media: (
+                <video
+                  src={uiGeofence}
+                  autoPlay loop muted playsInline
+                  className="w-full h-full object-cover"
+                />
+              ),
+              tags: ['Animated drift indicator', 'Distance in large text', 'Colour-coded state'],
             },
             {
               title: 'Community Card',
               badge: 'ON-WATCH ID',
-              color: 'sky',
-              borderCls: 'border-sky-400/30',
+              accentCls: 'border-sky-400/25',
               badgeCls: 'text-sky-300 bg-sky-400/10 border-sky-400/20',
               stripCls: 'bg-sky-400',
-              bullets: [
-                'Swipeable pages on watch',
-                'Tap-to-call emergency contact',
-                'Medical summary & allergies',
-                'Editable by caregiver',
-              ],
+              media: (
+                <video
+                  src={uiCommunityCard}
+                  autoPlay loop muted playsInline
+                  className="w-full h-full object-cover"
+                />
+              ),
+              tags: ['Smooth swipe transitions', 'Tap-to-call contact', 'Medical info on wrist'],
             },
-          ].map((s) => (
-            <div key={s.title} className={`rounded-2xl bg-white/5 border ${s.borderCls} flex flex-col overflow-hidden`}>
-              {/* colour strip */}
-              <div className={`h-1 w-full ${s.stripCls}`} />
+            {
+              title: 'Mobile App',
+              badge: 'CAREGIVER',
+              accentCls: 'border-purple-400/25',
+              badgeCls: 'text-purple-300 bg-purple-400/10 border-purple-400/20',
+              stripCls: 'bg-purple-400',
+              media: <img src={uiMobileApp} alt="Mobile app" className="w-full h-full object-cover" />,
+              tags: ['Push alert on drift', 'One-tap call back', 'Real-time GPS view'],
+            },
+          ].map(({ title, badge, accentCls, badgeCls, stripCls, media, tags }) => (
+            <div key={title} className={`rounded-2xl bg-white/5 border ${accentCls} flex flex-col overflow-hidden`}>
+              <div className={`h-0.5 w-full ${stripCls}`} />
 
-              <div className="p-4 flex flex-col gap-3 flex-1">
-                <div>
-                  <h3 className="font-bold text-sm text-white">{s.title}</h3>
-                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${s.badgeCls} mt-1 inline-block uppercase tracking-wider`}>
-                    {s.badge}
+              {/* Media */}
+              <div className="relative w-full aspect-[4/5] bg-black overflow-hidden">
+                {media}
+              </div>
+
+              {/* Label */}
+              <div className="p-2.5 flex flex-col gap-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="font-bold text-xs text-white">{title}</span>
+                  <span className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border ${badgeCls} uppercase tracking-wider`}>
+                    {badge}
                   </span>
                 </div>
-
-                {/* Screenshot placeholder */}
-                <div className={`rounded-xl bg-black/30 border ${s.borderCls} h-28 flex items-center justify-center`}>
-                  <ScanLine className="w-6 h-6 text-white/20" />
-                  <span className="text-[10px] text-white/20 ml-2 font-mono">[ Screenshot ]</span>
-                </div>
-
-                {/* Bullets */}
-                <ul className="space-y-1.5">
-                  {s.bullets.map((b) => (
-                    <li key={b} className="flex items-start gap-2 text-[11px] text-white/60">
-                      <div className={`w-1 h-1 rounded-full mt-1.5 shrink-0 ${s.stripCls}`} />
-                      {b}
+                <ul className="space-y-0.5">
+                  {tags.map((t) => (
+                    <li key={t} className="flex items-center gap-1.5 text-[9px] text-white/45">
+                      <div className={`w-1 h-1 rounded-full shrink-0 ${stripCls}`} />
+                      {t}
                     </li>
                   ))}
                 </ul>
@@ -301,18 +246,18 @@ const slides: Slide[] = [
           ))}
         </div>
 
-        {/* Interaction highlights */}
-        <div className="grid grid-cols-3 gap-4">
+        {/* Bottom highlight bar */}
+        <div className="grid grid-cols-3 gap-3">
           {[
-            { icon: <Vibrate className="w-5 h-5 text-green-400" />, title: 'Haptic Patterns', body: 'Gentle 1-pulse on DRIFT · 3 firm pulses on ALERT · Silent on SAFE' },
-            { icon: <Zap className="w-5 h-5 text-sky-300" />,   title: 'Smooth Animations', body: '260 ms Swiper slide transitions between Community Card pages' },
-            { icon: <Clock className="w-5 h-5 text-amber-400" />, title: 'Battery Adaptive',  body: 'GPS slows to 60 s poll when patient is still — 10 s when walking' },
+            { icon: <Zap className="w-4 h-4 text-green-400" />,    title: 'Smooth Animations',   body: 'Swiper transitions at 260 ms — fluid enough to feel responsive, slow enough for elderly users.' },
+            { icon: <Vibrate className="w-4 h-4 text-sky-300" />,  title: 'Haptic Feedback',      body: '1 gentle pulse on drift · 3 firm pulses on alert — no need to look at the screen.' },
+            { icon: <Users className="w-4 h-4 text-amber-400" />,  title: 'Elderly-First Design', body: 'High-contrast dark theme, large text, minimal steps — usable without reading glasses.' },
           ].map(({ icon, title, body }) => (
-            <div key={title} className="flex items-start gap-3 p-4 rounded-2xl bg-white/5 border border-white/10">
-              <div className="p-2 rounded-xl bg-white/5 shrink-0">{icon}</div>
+            <div key={title} className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
+              <div className="p-1.5 rounded-lg bg-white/5 shrink-0">{icon}</div>
               <div>
-                <div className="font-bold text-sm text-white mb-1">{title}</div>
-                <div className="text-xs text-white/50 leading-relaxed">{body}</div>
+                <div className="font-bold text-xs text-white mb-0.5">{title}</div>
+                <div className="text-[11px] text-white/45 leading-relaxed">{body}</div>
               </div>
             </div>
           ))}
@@ -327,68 +272,23 @@ const slides: Slide[] = [
   {
     id: 'demo',
     title: 'The Live Demo',
-    subtitle: '"This is your magic trick. Make it smooth, make it wow."',
+    subtitle: undefined,
     content: (
-      <div className="flex flex-col items-center w-full max-w-4xl gap-6">
+      <div className="flex flex-col items-center justify-center w-full max-w-lg gap-8 text-center">
 
-        {/* Scenario header */}
-        <div className="w-full p-4 rounded-2xl bg-amber-400/5 border border-amber-400/20 text-center">
-          <div className="flex items-center justify-center gap-2 text-amber-300 font-bold text-sm uppercase tracking-widest">
-            <Play className="w-4 h-4" /> Roleplay Scenario — "Margaret's Morning Walk"
+        {/* Pulsing icon */}
+        <div className="relative flex items-center justify-center">
+          <div className="absolute w-32 h-32 rounded-full bg-green-400/10 animate-ping" />
+          <div className="absolute w-24 h-24 rounded-full bg-green-400/10" />
+          <div className="w-20 h-20 rounded-full bg-green-400/15 border border-green-400/40 flex items-center justify-center shadow-[0_0_40px_-8px_rgba(74,222,128,0.5)]">
+            <Play className="w-8 h-8 text-green-400 ml-1" />
           </div>
         </div>
 
-        {/* Timeline steps */}
-        <div className="w-full space-y-3">
-          {[
-            {
-              num: '01', label: 'SETUP', color: 'green',
-              leftCls: 'bg-green-400', numCls: 'text-green-400', dotCls: 'border-green-400 shadow-green-400/50',
-              body: 'Caregiver opens ANCHOR, enters patient name "Margaret", taps "Set Home Point" — anchor GPS coordinate saved to persistent device storage.',
-            },
-            {
-              num: '02', label: 'MARGARET MOVES', color: 'amber',
-              leftCls: 'bg-amber-400', numCls: 'text-amber-400', dotCls: 'border-amber-400 shadow-amber-400/50',
-              body: 'Emulator location injected 35 m from anchor. Accelerometer motion simulated → DRIFTING state triggers. Watch fires 1 gentle haptic pulse.',
-            },
-            {
-              num: '03', label: 'ALERT FIRES', color: 'red',
-              leftCls: 'bg-red-400', numCls: 'text-red-400', dotCls: 'border-red-400 shadow-red-400/50',
-              body: 'Location updated to 60 m. Dual-signal confirmed: motion + GPS drift. ALERT state. 3 firm haptic pulses. Push notification: "Margaret may have left home."',
-            },
-            {
-              num: '04', label: 'FALL DETECTED', color: 'sky',
-              leftCls: 'bg-sky-400', numCls: 'text-sky-300', dotCls: 'border-sky-400 shadow-sky-400/50',
-              body: '"Simulate Fall" pressed on debug panel. ML classifier scores p(fall) ≥ 0.5 → confirmed. 3 long haptic pulses. Separate fall alert with GPS coords sent.',
-            },
-            {
-              num: '05', label: 'MARGARET RETURNS', color: 'green',
-              leftCls: 'bg-green-400', numCls: 'text-green-400', dotCls: 'border-green-400 shadow-green-400/50',
-              body: 'Location reset to within 30 m. Motion stops. State returns to SAFE — green badge. Caregiver is reassured.',
-            },
-          ].map(({ num, label, leftCls, numCls, dotCls, body }) => (
-            <div key={num} className="flex items-start gap-4">
-              {/* left accent */}
-              <div className={`w-1 self-stretch rounded-full ${leftCls} shrink-0`} />
-              {/* dot */}
-              <div className={`w-4 h-4 rounded-full border-2 bg-[#0D0D0D] ${dotCls} shadow-lg shrink-0 mt-1`} />
-              {/* content */}
-              <div className="flex-1 pb-1">
-                <div className="flex items-baseline gap-3 mb-1">
-                  <span className={`font-mono text-xs font-bold ${numCls}`}>{num}</span>
-                  <span className="font-bold text-sm text-white uppercase tracking-wide">{label}</span>
-                </div>
-                <p className="text-sm text-white/60 leading-relaxed">{body}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Setup note */}
-        <div className="w-full p-3 rounded-xl bg-white/5 border border-white/10 text-center">
-          <p className="text-xs font-mono text-white/30">
-            Watch projected via DevEco Studio emulator &nbsp;·&nbsp; GPS injected via emulator toolbar &nbsp;·&nbsp; Fall simulated via debug panel
-          </p>
+        {/* Text */}
+        <div className="space-y-3">
+          <p className="text-xs font-mono text-green-400/60 uppercase tracking-[0.3em]">Live Demo</p>
+          <h2 className="text-4xl font-display font-bold text-white tracking-tight">In Progress</h2>
         </div>
       </div>
     ),
@@ -400,137 +300,114 @@ const slides: Slide[] = [
   {
     id: 'innovation',
     title: 'Innovation Highlight',
-    subtitle: '"Briefly show your technical depth to build trust."',
+    subtitle: undefined,
     content: (
-      <div className="flex flex-col w-full max-w-7xl gap-4">
+      <div className="grid grid-cols-2 gap-4 w-full max-w-7xl">
 
-        {/* ── ML Fall Classifier band (~20% height) ── */}
-        <div className="w-full rounded-2xl bg-white/5 border border-purple-400/30 overflow-hidden shadow-[0_0_40px_-10px_rgba(192,132,255,0.2)]">
-          <div className="h-0.5 w-full bg-purple-400" />
-          <div className="p-4 space-y-3">
-
-            {/* headline row */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Brain className="w-5 h-5 text-purple-400" />
-                <span className="font-bold text-white">On-Device ML Fall Classifier</span>
-                <span className="text-xs font-mono text-purple-300/70">— Logistic Regression on SisFall</span>
-              </div>
-              <div className="flex items-center gap-3 text-[10px] font-mono text-purple-300">
-                {[['38', 'subjects'], ['15', 'fall types'], ['19', 'activities']].map(([v, l]) => (
-                  <div key={l} className="text-center bg-purple-400/10 border border-purple-400/20 rounded-lg px-2 py-1">
-                    <div className="text-purple-300 font-bold text-sm">{v}</div>
-                    <div className="text-white/30">{l}</div>
-                  </div>
-                ))}
-              </div>
+        {/* ── 1. ML Fall Classifier ── */}
+        <div className="rounded-2xl bg-white/5 border border-purple-400/25 p-5 flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-purple-400/10 shrink-0">
+              <Brain className="w-5 h-5 text-purple-400" />
             </div>
-
-            {/* pipeline */}
-            <div className="flex items-center gap-1 flex-wrap text-[10px] font-mono text-white/40">
-              {['Raw accel ~5 Hz', 'Feature extraction', 'StandardScaler', 'Logistic Regression', 'Sigmoid', 'p(fall) ≥ 0.5', 'ALERT'].map((node, i, arr) => (
-                <React.Fragment key={node}>
-                  <span className={`px-2 py-0.5 rounded border ${i === arr.length - 1 ? 'text-red-300 border-red-400/30 bg-red-400/10' : i >= 3 ? 'text-purple-300 border-purple-400/20 bg-purple-400/10' : 'text-white/50 border-white/10 bg-white/5'}`}>
-                    {node}
-                  </span>
-                  {i < arr.length - 1 && <ArrowRight className="w-3 h-3 text-white/20 shrink-0" />}
-                </React.Fragment>
-              ))}
+            <div>
+              <div className="font-bold text-white">On-Device Fall Detection</div>
+              <div className="text-[10px] text-purple-300/60 mt-0.5">ML model · runs entirely on the watch</div>
             </div>
-
-            {/* 4 feature chips */}
-            <div className="grid grid-cols-4 gap-2">
-              {[
-                { name: 'impactPeak',    coef: '+5.98', coefCls: 'text-red-300',   note: 'peak G during impact' },
-                { name: 'preEnergy',     coef: '−0.69', coefCls: 'text-green-400', note: 'activity before impact' },
-                { name: 'postStillness', coef: '−0.31', coefCls: 'text-green-400', note: 'stillness after fall' },
-                { name: 'postVariance',  coef: '−0.76', coefCls: 'text-green-400', note: 'sustained stillness' },
-              ].map(({ name, coef, coefCls, note }) => (
-                <div key={name} className="bg-black/30 border border-purple-400/20 rounded-xl p-2.5 flex items-center justify-between gap-2">
-                  <div>
-                    <div className="text-[11px] font-mono font-bold text-sky-300">{name}</div>
-                    <div className="text-[10px] text-white/35 mt-0.5">{note}</div>
-                  </div>
-                  <div className={`text-sm font-bold font-mono ${coefCls} shrink-0`}>{coef}</div>
-                </div>
-              ))}
-            </div>
-
-            <p className="text-[10px] font-mono text-white/25">
-              bias = +0.93 · coefficients learned via cross-entropy minimisation · all inference on-device, no cloud
-            </p>
           </div>
-        </div>
-
-        {/* ── bottom row: other innovations + performance ── */}
-        <div className="grid grid-cols-2 gap-4 flex-1">
-
-          {/* Left: other innovations */}
-          <div className="rounded-2xl bg-white/5 border border-green-400/20 p-5 space-y-4">
-            <div className="text-[10px] font-mono text-green-400 uppercase tracking-widest font-bold border-b border-green-400/20 pb-2">
-              Other Innovations
-            </div>
-
-            {[
-              {
-                icon: <Navigation2 className="w-5 h-5 text-green-400" />,
-                title: 'Dual-Signal Geofencing',
-                body: 'GPS + accelerometer must both agree before an alert fires — eliminates false alarms from indoor GPS drift (±10–50 m).',
-              },
-              {
-                icon: <MapPin className="w-5 h-5 text-sky-300" />,
-                title: 'Haversine Distance Engine',
-                body: 'Great-circle formula for accurate 30–50 m distance. Bearing calculation drives the radar-dot direction indicator on the UI.',
-              },
-              {
-                icon: <Cpu className="w-5 h-5 text-purple-400" />,
-                title: 'Emulator / Device Abstraction',
-                body: 'MotionDetector and FallDetector are injected interfaces. AppConfig.IS_EMULATOR swaps Mock* ↔ Real* at compile time — zero runtime if-branches in business logic.',
-              },
-            ].map(({ icon, title, body }) => (
-              <div key={title} className="flex items-start gap-3">
-                <div className="p-2 rounded-xl bg-white/5 shrink-0">{icon}</div>
-                <div>
-                  <div className="font-bold text-sm text-white mb-0.5">{title}</div>
-                  <div className="text-xs text-white/50 leading-relaxed">{body}</div>
-                </div>
+          <p className="text-sm text-white/55 leading-relaxed">
+            A Logistic Regression model trained on the SisFall dataset (38 subjects) detects falls by recognising a sharp impact followed by prolonged stillness — all processed on the watch itself, with no internet required.
+          </p>
+          <div className="grid grid-cols-3 gap-2 mt-auto">
+            {[['38', 'subjects'], ['15', 'fall types'], ['&lt;10 s', 'to alert']].map(([val, label]) => (
+              <div key={label} className="bg-black/20 border border-purple-400/15 rounded-lg p-2 text-center">
+                <div className="text-sm font-bold text-purple-300" dangerouslySetInnerHTML={{ __html: val }} />
+                <div className="text-[9px] text-white/30 mt-0.5">{label}</div>
               </div>
             ))}
           </div>
+        </div>
 
-          {/* Right: performance metrics */}
-          <div className="rounded-2xl bg-white/5 border border-amber-400/20 p-5 space-y-4">
-            <div className="text-[10px] font-mono text-amber-400 uppercase tracking-widest font-bold border-b border-amber-400/20 pb-2">
-              Performance &amp; Battery
+        {/* ── 2. Dual-Signal Geofencing ── */}
+        <div className="rounded-2xl bg-white/5 border border-green-400/25 p-5 flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-green-400/10 shrink-0">
+              <Navigation2 className="w-5 h-5 text-green-400" />
             </div>
-
-            <div className="space-y-2">
-              {[
-                { label: 'GPS — at rest',        val: '60 s poll interval',              cls: 'text-white/50' },
-                { label: 'GPS — while walking',   val: '10 s poll  (motion wake)',        cls: 'text-amber-300' },
-                { label: 'Accelerometer',         val: 'Continuous low-power step mode',  cls: 'text-green-400' },
-                { label: 'Pre-impact window',     val: '5 samples ≈ 1 s context',         cls: 'text-sky-300' },
-                { label: 'Post-impact window',    val: '10 samples ≈ 2 s confirmation',   cls: 'text-sky-300' },
-                { label: 'Fall threshold',        val: 'p ≥ 0.50  (tunable for recall)',  cls: 'text-purple-400' },
-                { label: 'Motion debounce',       val: '2 s — noise immune state flip',   cls: 'text-white/50' },
-              ].map(({ label, val, cls }) => (
-                <div key={label} className="flex items-center justify-between py-1.5 border-b border-white/5 last:border-0">
-                  <span className="text-xs text-white/50">{label}</span>
-                  <span className={`text-xs font-mono font-bold ${cls}`}>{val}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Tech stack pills */}
-            <div className="flex flex-wrap gap-1.5 pt-1">
-              {['ArkTS', '@ohos.sensor', '@ohos.geoLocationManager', '@ohos.vibrator', 'SisFall', 'Logistic Regression'].map((t) => (
-                <span key={t} className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-sky-400/10 border border-sky-400/20 text-sky-300">
-                  {t}
-                </span>
-              ))}
+            <div>
+              <div className="font-bold text-white">Dual-Signal Geofencing</div>
+              <div className="text-[10px] text-green-400/60 mt-0.5">GPS + motion sensor · no false alarms</div>
             </div>
           </div>
+          <p className="text-sm text-white/55 leading-relaxed">
+            An alert only triggers when both GPS distance and motion sensor agree the senior has left the safe zone — preventing false alarms caused by GPS signal drift indoors.
+          </p>
+          <div className="grid grid-cols-3 gap-2 mt-auto">
+            {[
+              { label: 'Safe',     val: '< 30 m',  cls: 'text-green-400' },
+              { label: 'Drifting', val: '30–50 m', cls: 'text-amber-400' },
+              { label: 'Alert',    val: '> 50 m',  cls: 'text-red-400'   },
+            ].map(({ label, val, cls }) => (
+              <div key={label} className="bg-black/20 border border-white/10 rounded-lg p-2 text-center">
+                <div className={`text-sm font-bold ${cls}`}>{val}</div>
+                <div className="text-[9px] text-white/30 mt-0.5">{label}</div>
+              </div>
+            ))}
+          </div>
         </div>
+
+        {/* ── 3. Haversine Distance Engine ── */}
+        <div className="rounded-2xl bg-white/5 border border-sky-400/25 p-5 flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-sky-400/10 shrink-0">
+              <MapPin className="w-5 h-5 text-sky-300" />
+            </div>
+            <div>
+              <div className="font-bold text-white">Haversine Distance Engine</div>
+              <div className="text-[10px] text-sky-300/60 mt-0.5">Accurate to metres · shows direction</div>
+            </div>
+          </div>
+          <p className="text-sm text-white/55 leading-relaxed">
+            Distance from the anchor point is calculated using the curvature of the Earth, giving metre-level accuracy. The bearing is also computed to show caregivers which direction the senior has moved.
+          </p>
+          <div className="grid grid-cols-2 gap-2 mt-auto">
+            {[['Metre-level', 'distance accuracy'], ['Live bearing', 'direction on watch']].map(([val, label]) => (
+              <div key={label} className="bg-black/20 border border-sky-400/15 rounded-lg p-2 text-center">
+                <div className="text-sm font-bold text-sky-300">{val}</div>
+                <div className="text-[9px] text-white/30 mt-0.5">{label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── 4. Performance & Battery ── */}
+        <div className="rounded-2xl bg-white/5 border border-amber-400/25 p-5 flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-amber-400/10 shrink-0">
+              <Cpu className="w-5 h-5 text-amber-400" />
+            </div>
+            <div>
+              <div className="font-bold text-white">Performance &amp; Battery</div>
+              <div className="text-[10px] text-amber-400/60 mt-0.5">Adaptive polling · built for all-day wear</div>
+            </div>
+          </div>
+          <p className="text-sm text-white/55 leading-relaxed">
+            Location updates slow down when the senior is still and speed up when they start walking — conserving battery without sacrificing responsiveness.
+          </p>
+          <div className="space-y-1.5 mt-auto">
+            {[
+              { label: 'GPS while still',    val: 'Every 60 s',   cls: 'text-white/50'  },
+              { label: 'GPS while walking',  val: 'Every 10 s',   cls: 'text-amber-300' },
+              { label: 'Fall confirmation',  val: '~3 s window',  cls: 'text-sky-300'   },
+            ].map(({ label, val, cls }) => (
+              <div key={label} className="flex items-center justify-between py-1.5 border-b border-white/5 last:border-0">
+                <span className="text-xs text-white/45">{label}</span>
+                <span className={`text-xs font-bold ${cls}`}>{val}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
     ),
   },
@@ -541,7 +418,7 @@ const slides: Slide[] = [
   {
     id: 'team',
     title: 'The Dream Team',
-    subtitle: '"Leave the judges with a lasting impression of your passion."',
+    subtitle: undefined,
     content: (
       <div className="flex flex-col items-center w-full max-w-6xl gap-6">
 
@@ -556,42 +433,42 @@ const slides: Slide[] = [
               stripCls: 'bg-green-400',
               badgeCls: 'text-green-400 bg-green-400/10 border-green-400/20',
               nameCls: 'text-green-400',
+              photo: photoUjwal,
               bio: 'MSc Cyber Security student & Former Data Scientist at Optum. Leveraging 3 years of industry experience to bridge data-driven insights with secure, agentic AI.',
               credit: 'Built the dual-signal geofencing engine — GPS + accelerometer state machine, Haversine distance, and battery-adaptive GPS polling.',
             },
             {
               name: 'Harshdeep',
               handle: 'The Professor',
-              role: 'AI & Algorithms Lead',
+              role: 'Engineering & UX Lead',
               accentCls: 'border-amber-400/30',
               stripCls: 'bg-amber-400',
               badgeCls: 'text-amber-400 bg-amber-400/10 border-amber-400/20',
               nameCls: 'text-amber-300',
+              photo: photoHarshdeep,
               bio: 'MS in AI Candidate & Former Research Intern. Experience in Reinforcement Learning, Quantum Computing, and high-dimensional optimisation challenges.',
               credit: 'Wired the smartwatch to the phone — push notifications, caregiver alerts, and real-time state sync between devices.',
             },
             {
               name: 'Ardacandra',
               handle: 'The Coder',
-              role: 'Engineering & UX Lead',
+              role: 'AI & Algorithms Lead',
               accentCls: 'border-sky-400/30',
               stripCls: 'bg-sky-400',
               badgeCls: 'text-sky-300 bg-sky-400/10 border-sky-400/20',
               nameCls: 'text-sky-300',
+              photo: photoArda,
               bio: 'MS in AI Candidate & Former Data Scientist. Bridging 3 years of ML experience with privacy-centric, on-device optimisation for wearables.',
               credit: 'Built the Community Card feature and trained the logistic regression on SisFall (38 subjects, 15 fall types) — wired into MLFallDetector.',
             },
-          ].map(({ name, handle, role, accentCls, stripCls, badgeCls, nameCls, bio, credit }) => (
+          ].map(({ name, handle, role, accentCls, stripCls, badgeCls, nameCls, photo, bio, credit }) => (
             <div key={name} className={`rounded-2xl bg-white/5 border ${accentCls} flex flex-col overflow-hidden`}>
               <div className={`h-1 ${stripCls}`} />
               <div className="p-5 flex flex-col gap-4 flex-1">
 
-                {/* Photo placeholder */}
-                <div className={`w-full h-32 rounded-xl bg-black/30 border ${accentCls} flex items-center justify-center`}>
-                  <div className="text-center">
-                    <Users className="w-8 h-8 text-white/20 mx-auto" />
-                    <div className="text-[10px] font-mono text-white/20 mt-1">[ Photo ]</div>
-                  </div>
+                {/* Photo */}
+                <div className={`w-full h-40 rounded-xl overflow-hidden border ${accentCls}`}>
+                  <img src={photo} alt={name} className="w-full h-full object-cover object-top" />
                 </div>
 
                 {/* Name + role */}
@@ -673,6 +550,21 @@ export default function App() {
 
         {/* Background glow */}
         <div className="fixed inset-0 z-0 pointer-events-none">
+          {/* Slide 1 full-screen background image */}
+          <AnimatePresence>
+            {currentSlide === 0 && (
+              <motion.div
+                key="slide1-bg"
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${slide1Bg})` }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+              />
+            )}
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-[#0D0D0D]/60" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(74,222,128,0.06),transparent_60%)]" />
           <div className="absolute bottom-0 left-0 right-0 h-[50vh] bg-gradient-to-t from-[#0D0D0D]/90 to-transparent" />
         </div>
