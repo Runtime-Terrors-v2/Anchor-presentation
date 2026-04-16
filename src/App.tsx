@@ -1,27 +1,22 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import slide1Bg from './assets/backgrounds/slide_1_background.jpeg';
 import {
   ChevronLeft,
   ChevronRight,
   Anchor,
   MapPin,
-  Activity,
   AlertTriangle,
-  ShieldCheck,
   Vibrate,
   Brain,
   Users,
   Zap,
   ArrowRight,
-  CheckCircle2,
   Clock,
-  Smartphone,
-  Watch,
   Heart,
   Navigation2,
   ScanLine,
   Cpu,
-  Database,
   Play,
 } from 'lucide-react';
 
@@ -78,24 +73,6 @@ const Navigation = ({
 // Slide content helpers
 // ---------------------------------------------------------------------------
 
-// Drift state badge
-const DriftBadge = ({ state }: { state: 'SAFE' | 'DRIFTING' | 'ALERT' }) => {
-  const cfg = {
-    SAFE:     { bg: 'bg-green-400/20',  border: 'border-green-400/50',  text: 'text-green-300',  dot: 'bg-green-400',  sub: '< 30 m'  },
-    DRIFTING: { bg: 'bg-amber-400/20',  border: 'border-amber-400/50',  text: 'text-amber-300',  dot: 'bg-amber-400',  sub: '30–50 m' },
-    ALERT:    { bg: 'bg-red-400/20',    border: 'border-red-400/50',    text: 'text-red-300',    dot: 'bg-red-400',    sub: '> 50 m'  },
-  }[state];
-  return (
-    <div className={`flex items-center gap-2 px-3 py-2 rounded-xl border ${cfg.bg} ${cfg.border}`}>
-      <div className={`w-2 h-2 rounded-full ${cfg.dot} shadow-lg`} />
-      <div>
-        <div className={`text-xs font-bold font-mono ${cfg.text}`}>{state}</div>
-        <div className="text-[10px] text-white/40">{cfg.sub}</div>
-      </div>
-    </div>
-  );
-};
-
 // ---------------------------------------------------------------------------
 // Slides
 // ---------------------------------------------------------------------------
@@ -108,91 +85,63 @@ const slides: Slide[] = [
   {
     id: 'hook',
     title: 'The Hook',
-    subtitle: '"Capture our hearts before you capture our minds."',
+    subtitle: undefined,
     content: (
-      <div className="grid lg:grid-cols-2 gap-12 items-center w-full max-w-7xl">
+      <div className="grid grid-cols-2 w-full max-w-7xl">
 
-        {/* LEFT — identity + problem */}
-        <div className="space-y-6">
-          {/* eyebrow */}
-          <div className="flex items-center gap-3 text-white/30 font-mono text-xs uppercase tracking-widest">
-            <span>Local Lifestyle Track</span>
-            <div className="w-1 h-1 rounded-full bg-white/20" />
-            <span>Team Runtime Terrors</span>
+        {/* LEFT — empty, lets the person show through */}
+        <div />
+
+        {/* RIGHT — all content */}
+        <div className="flex flex-col gap-7 text-left pl-12">
+
+          {/* Logo + eyebrow */}
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-white/5 border border-green-400/30 flex items-center justify-center shadow-[0_0_40px_-8px_rgba(74,222,128,0.4)]">
+              <Anchor className="w-7 h-7 text-green-400" />
+            </div>
+            <div className="flex items-center gap-2 text-white/30 font-mono text-xs uppercase tracking-widest">
+              <span>Local Lifestyle Track</span>
+              <div className="w-1 h-1 rounded-full bg-white/20" />
+              <span>Team Runtime Terrors</span>
+            </div>
           </div>
 
-          {/* title */}
-          <div>
-            <p className="text-green-400 font-mono text-sm uppercase tracking-[0.3em] mb-1">Project</p>
-            <h1 className="text-7xl md:text-8xl font-display font-bold tracking-tighter text-white leading-none">
+          {/* Title */}
+          <div className="space-y-2">
+            <p className="text-green-400 font-mono text-sm uppercase tracking-[0.3em]">Project</p>
+            <h1 className="text-8xl font-display font-bold tracking-tighter text-white leading-none">
               ANCHOR
             </h1>
-            <p className="mt-3 text-white/50 text-base italic font-light">
+            <p className="text-white/40 text-base italic font-light">
               "Your neighbourhood, always within reach."
             </p>
           </div>
 
-          {/* who */}
-          <div className="p-5 rounded-2xl bg-white/5 border border-white/10">
-            <div className="flex items-center gap-2 mb-2 text-sky-300 font-bold text-sm uppercase tracking-wider">
-              <Users className="w-4 h-4" /> Who is this for?
-            </div>
-            <p className="text-white/70 text-sm leading-relaxed">
-              Active seniors (60+) who desire to explore local hubs
-              independently — without constant worry or supervision.
-            </p>
-          </div>
+          <div className="w-12 h-px bg-green-400/30" />
 
-          {/* pain point */}
-          <div className="p-5 rounded-2xl bg-amber-400/5 border border-amber-400/20">
-            <div className="flex items-center gap-2 mb-2 text-amber-300 font-bold text-sm uppercase tracking-wider">
-              <AlertTriangle className="w-4 h-4" /> The Pain Point
-            </div>
-            <p className="text-white/70 text-sm leading-relaxed">
-              Seniors limit outings due to fear of disorientation —
-              causing <strong className="text-white">social isolation</strong> and{' '}
-              <strong className="text-white">over-protection</strong> from well-meaning families.
-            </p>
-          </div>
-        </div>
-
-        {/* RIGHT — logo + stats + states */}
-        <div className="flex flex-col items-center gap-6">
-
-          {/* Logo placeholder */}
-          <div className="w-36 h-36 rounded-3xl bg-white/5 border-2 border-green-400/30 flex flex-col items-center justify-center gap-2 shadow-[0_0_60px_-10px_rgba(74,222,128,0.3)]">
-            <Anchor className="w-14 h-14 text-green-400" />
-            <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">[ logo ]</span>
-          </div>
-
-          {/* Stat chips */}
-          <div className="grid grid-cols-3 gap-3 w-full max-w-sm">
-            {[
-              { val: '60+',    sub: 'Target age' },
-              { val: '2',      sub: 'Signals fused' },
-              { val: '<10 s',  sub: 'Alert speed' },
-            ].map(({ val, sub }) => (
-              <div key={val} className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
-                <div className="text-2xl font-bold text-green-400 font-display">{val}</div>
-                <div className="text-[10px] text-white/40 mt-0.5">{sub}</div>
+          {/* Info cards */}
+          <div className="flex flex-col gap-3">
+            <div className="p-5 rounded-2xl bg-white/5 border border-white/10">
+              <div className="flex items-center gap-2 mb-2 text-sky-300 font-bold text-sm uppercase tracking-wider">
+                <Users className="w-4 h-4" /> Who is this for?
               </div>
-            ))}
-          </div>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Active seniors (60+) who desire to explore local hubs
+                independently — without constant worry or supervision.
+              </p>
+            </div>
 
-          {/* Drift state badges */}
-          <div className="w-full max-w-sm space-y-2">
-            <p className="text-[10px] font-mono text-white/30 uppercase tracking-widest text-center mb-3">
-              Drift States
-            </p>
-            <DriftBadge state="SAFE" />
-            <DriftBadge state="DRIFTING" />
-            <DriftBadge state="ALERT" />
-          </div>
-
-          {/* Platform */}
-          <div className="flex items-center gap-2 text-xs font-mono text-white/25 uppercase tracking-widest">
-            <Watch className="w-4 h-4" />
-            <span>HarmonyOS · Huawei Watch · ArkTS</span>
+            <div className="p-5 rounded-2xl bg-amber-400/5 border border-amber-400/20">
+              <div className="flex items-center gap-2 mb-2 text-amber-300 font-bold text-sm uppercase tracking-wider">
+                <AlertTriangle className="w-4 h-4" /> The Pain Point
+              </div>
+              <p className="text-white/70 text-sm leading-relaxed">
+                Seniors limit outings due to fear of disorientation —
+                causing <strong className="text-white">social isolation</strong> and{' '}
+                <strong className="text-white">over-protection</strong> from well-meaning families.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -673,6 +622,21 @@ export default function App() {
 
         {/* Background glow */}
         <div className="fixed inset-0 z-0 pointer-events-none">
+          {/* Slide 1 full-screen background image */}
+          <AnimatePresence>
+            {currentSlide === 0 && (
+              <motion.div
+                key="slide1-bg"
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${slide1Bg})` }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4 }}
+              />
+            )}
+          </AnimatePresence>
+          <div className="absolute inset-0 bg-[#0D0D0D]/60" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(74,222,128,0.06),transparent_60%)]" />
           <div className="absolute bottom-0 left-0 right-0 h-[50vh] bg-gradient-to-t from-[#0D0D0D]/90 to-transparent" />
         </div>
