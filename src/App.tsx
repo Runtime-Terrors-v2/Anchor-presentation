@@ -269,68 +269,23 @@ const slides: Slide[] = [
   {
     id: 'demo',
     title: 'The Live Demo',
-    subtitle: '"This is your magic trick. Make it smooth, make it wow."',
+    subtitle: undefined,
     content: (
-      <div className="flex flex-col items-center w-full max-w-4xl gap-6">
+      <div className="flex flex-col items-center justify-center w-full max-w-lg gap-8 text-center">
 
-        {/* Scenario header */}
-        <div className="w-full p-4 rounded-2xl bg-amber-400/5 border border-amber-400/20 text-center">
-          <div className="flex items-center justify-center gap-2 text-amber-300 font-bold text-sm uppercase tracking-widest">
-            <Play className="w-4 h-4" /> Roleplay Scenario — "Margaret's Morning Walk"
+        {/* Pulsing icon */}
+        <div className="relative flex items-center justify-center">
+          <div className="absolute w-32 h-32 rounded-full bg-green-400/10 animate-ping" />
+          <div className="absolute w-24 h-24 rounded-full bg-green-400/10" />
+          <div className="w-20 h-20 rounded-full bg-green-400/15 border border-green-400/40 flex items-center justify-center shadow-[0_0_40px_-8px_rgba(74,222,128,0.5)]">
+            <Play className="w-8 h-8 text-green-400 ml-1" />
           </div>
         </div>
 
-        {/* Timeline steps */}
-        <div className="w-full space-y-3">
-          {[
-            {
-              num: '01', label: 'SETUP', color: 'green',
-              leftCls: 'bg-green-400', numCls: 'text-green-400', dotCls: 'border-green-400 shadow-green-400/50',
-              body: 'Caregiver opens ANCHOR, enters patient name "Margaret", taps "Set Home Point" — anchor GPS coordinate saved to persistent device storage.',
-            },
-            {
-              num: '02', label: 'MARGARET MOVES', color: 'amber',
-              leftCls: 'bg-amber-400', numCls: 'text-amber-400', dotCls: 'border-amber-400 shadow-amber-400/50',
-              body: 'Emulator location injected 35 m from anchor. Accelerometer motion simulated → DRIFTING state triggers. Watch fires 1 gentle haptic pulse.',
-            },
-            {
-              num: '03', label: 'ALERT FIRES', color: 'red',
-              leftCls: 'bg-red-400', numCls: 'text-red-400', dotCls: 'border-red-400 shadow-red-400/50',
-              body: 'Location updated to 60 m. Dual-signal confirmed: motion + GPS drift. ALERT state. 3 firm haptic pulses. Push notification: "Margaret may have left home."',
-            },
-            {
-              num: '04', label: 'FALL DETECTED', color: 'sky',
-              leftCls: 'bg-sky-400', numCls: 'text-sky-300', dotCls: 'border-sky-400 shadow-sky-400/50',
-              body: '"Simulate Fall" pressed on debug panel. ML classifier scores p(fall) ≥ 0.5 → confirmed. 3 long haptic pulses. Separate fall alert with GPS coords sent.',
-            },
-            {
-              num: '05', label: 'MARGARET RETURNS', color: 'green',
-              leftCls: 'bg-green-400', numCls: 'text-green-400', dotCls: 'border-green-400 shadow-green-400/50',
-              body: 'Location reset to within 30 m. Motion stops. State returns to SAFE — green badge. Caregiver is reassured.',
-            },
-          ].map(({ num, label, leftCls, numCls, dotCls, body }) => (
-            <div key={num} className="flex items-start gap-4">
-              {/* left accent */}
-              <div className={`w-1 self-stretch rounded-full ${leftCls} shrink-0`} />
-              {/* dot */}
-              <div className={`w-4 h-4 rounded-full border-2 bg-[#0D0D0D] ${dotCls} shadow-lg shrink-0 mt-1`} />
-              {/* content */}
-              <div className="flex-1 pb-1">
-                <div className="flex items-baseline gap-3 mb-1">
-                  <span className={`font-mono text-xs font-bold ${numCls}`}>{num}</span>
-                  <span className="font-bold text-sm text-white uppercase tracking-wide">{label}</span>
-                </div>
-                <p className="text-sm text-white/60 leading-relaxed">{body}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Setup note */}
-        <div className="w-full p-3 rounded-xl bg-white/5 border border-white/10 text-center">
-          <p className="text-xs font-mono text-white/30">
-            Watch projected via DevEco Studio emulator &nbsp;·&nbsp; GPS injected via emulator toolbar &nbsp;·&nbsp; Fall simulated via debug panel
-          </p>
+        {/* Text */}
+        <div className="space-y-3">
+          <p className="text-xs font-mono text-green-400/60 uppercase tracking-[0.3em]">Live Demo</p>
+          <h2 className="text-4xl font-display font-bold text-white tracking-tight">In Progress</h2>
         </div>
       </div>
     ),
