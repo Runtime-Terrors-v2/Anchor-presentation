@@ -5,6 +5,9 @@ import uiMainMenu from './assets/screenshots/ui_main_menu.png';
 import uiMobileApp from './assets/screenshots/ui_mobile_app.png';
 import uiGeofence from './assets/screenshots/ui_geofence.mp4';
 import uiCommunityCard from './assets/screenshots/ui_community_card.mp4';
+import photoUjwal from './assets/team/photo_ujwal.jpg';
+import photoHarshdeep from './assets/team/photo_harshdeep.jpeg';
+import photoArda from './assets/team/photo_arda.jpg';
 import {
   ChevronLeft,
   ChevronRight,
@@ -415,7 +418,7 @@ const slides: Slide[] = [
   {
     id: 'team',
     title: 'The Dream Team',
-    subtitle: '"Leave the judges with a lasting impression of your passion."',
+    subtitle: undefined,
     content: (
       <div className="flex flex-col items-center w-full max-w-6xl gap-6">
 
@@ -430,42 +433,42 @@ const slides: Slide[] = [
               stripCls: 'bg-green-400',
               badgeCls: 'text-green-400 bg-green-400/10 border-green-400/20',
               nameCls: 'text-green-400',
+              photo: photoUjwal,
               bio: 'MSc Cyber Security student & Former Data Scientist at Optum. Leveraging 3 years of industry experience to bridge data-driven insights with secure, agentic AI.',
               credit: 'Built the dual-signal geofencing engine — GPS + accelerometer state machine, Haversine distance, and battery-adaptive GPS polling.',
             },
             {
               name: 'Harshdeep',
               handle: 'The Professor',
-              role: 'AI & Algorithms Lead',
+              role: 'Engineering & UX Lead',
               accentCls: 'border-amber-400/30',
               stripCls: 'bg-amber-400',
               badgeCls: 'text-amber-400 bg-amber-400/10 border-amber-400/20',
               nameCls: 'text-amber-300',
+              photo: photoHarshdeep,
               bio: 'MS in AI Candidate & Former Research Intern. Experience in Reinforcement Learning, Quantum Computing, and high-dimensional optimisation challenges.',
               credit: 'Wired the smartwatch to the phone — push notifications, caregiver alerts, and real-time state sync between devices.',
             },
             {
               name: 'Ardacandra',
               handle: 'The Coder',
-              role: 'Engineering & UX Lead',
+              role: 'AI & Algorithms Lead',
               accentCls: 'border-sky-400/30',
               stripCls: 'bg-sky-400',
               badgeCls: 'text-sky-300 bg-sky-400/10 border-sky-400/20',
               nameCls: 'text-sky-300',
+              photo: photoArda,
               bio: 'MS in AI Candidate & Former Data Scientist. Bridging 3 years of ML experience with privacy-centric, on-device optimisation for wearables.',
               credit: 'Built the Community Card feature and trained the logistic regression on SisFall (38 subjects, 15 fall types) — wired into MLFallDetector.',
             },
-          ].map(({ name, handle, role, accentCls, stripCls, badgeCls, nameCls, bio, credit }) => (
+          ].map(({ name, handle, role, accentCls, stripCls, badgeCls, nameCls, photo, bio, credit }) => (
             <div key={name} className={`rounded-2xl bg-white/5 border ${accentCls} flex flex-col overflow-hidden`}>
               <div className={`h-1 ${stripCls}`} />
               <div className="p-5 flex flex-col gap-4 flex-1">
 
-                {/* Photo placeholder */}
-                <div className={`w-full h-32 rounded-xl bg-black/30 border ${accentCls} flex items-center justify-center`}>
-                  <div className="text-center">
-                    <Users className="w-8 h-8 text-white/20 mx-auto" />
-                    <div className="text-[10px] font-mono text-white/20 mt-1">[ Photo ]</div>
-                  </div>
+                {/* Photo */}
+                <div className={`w-full h-40 rounded-xl overflow-hidden border ${accentCls}`}>
+                  <img src={photo} alt={name} className="w-full h-full object-cover object-top" />
                 </div>
 
                 {/* Name + role */}
