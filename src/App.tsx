@@ -58,7 +58,7 @@ const ProgressBar = ({ current, total }: { current: number; total: number }) => 
 const Navigation = ({
   onPrev, onNext, current, total,
 }: { onPrev: () => void; onNext: () => void; current: number; total: number }) => (
-  <div className="fixed bottom-8 right-8 flex items-center gap-5 z-50">
+  <div className="fixed bottom-8 right-8 flex items-center gap-4 z-50">
     <div className="text-sm font-mono text-white/40 mr-4">
       {String(current + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
     </div>
@@ -144,9 +144,9 @@ const slides: Slide[] = [
         <div className="flex flex-col gap-7 text-left pl-12">
 
           {/* Logo + eyebrow */}
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl bg-white/5 border border-green-400/30 flex items-center justify-center shadow-[0_0_40px_-8px_rgba(74,222,128,0.4)]">
-              <Anchor className="w-9 h-9 text-green-400" />
+              <Anchor className="w-7 h-7 text-green-400" />
             </div>
             <div className="flex items-center gap-2 text-white/30 font-mono text-xs uppercase tracking-widest">
               <span>Local Lifestyle Track</span>
@@ -314,7 +314,7 @@ const slides: Slide[] = [
             { icon: <Vibrate className="w-5 h-5 text-sky-300" />,  title: 'Haptic Feedback',      body: '1 gentle pulse on drift · 3 firm pulses on alert — no need to look at the screen.' },
             { icon: <Users className="w-5 h-5 text-amber-400" />,  title: 'Elderly-First Design', body: 'High-contrast dark theme, large text, minimal steps — usable without reading glasses.' },
           ].map(({ icon, title, body }) => (
-            <div key={title} className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
+            <div key={title} className="flex items-start gap-4 p-3 rounded-xl bg-white/5 border border-white/10">
               <div className="p-2 rounded-lg bg-white/5 shrink-0">{icon}</div>
               <div>
                 <div className="font-bold text-sm text-white mb-1">{title}</div>
@@ -336,107 +336,107 @@ const slides: Slide[] = [
     subtitle: undefined,
     content: (
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 'calc(100vh - 160px)', paddingBottom: '80px', width: '100%', alignItems: 'center' }}>
-      <div className="grid grid-cols-2 gap-8 w-full max-w-7xl">
+      <div className="grid grid-cols-2 gap-6 w-full max-w-7xl">
 
         {/* ── 1. ML Fall Classifier ── */}
-        <div className="rounded-2xl bg-white/5 border border-purple-400/25 p-8 flex flex-col gap-5">
-          <div className="flex items-center gap-5">
-            <div className="p-4 rounded-xl bg-purple-400/10 shrink-0">
-              <Brain className="w-9 h-9 text-purple-400" />
+        <div className="rounded-2xl bg-white/5 border border-purple-400/25 p-6 flex flex-col gap-4">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-xl bg-purple-400/10 shrink-0">
+              <Brain className="w-7 h-7 text-purple-400" />
             </div>
             <div>
-              <div className="text-lg font-bold text-white">On-Device Fall Detection</div>
-              <div className="text-base text-purple-300/60 mt-0.5">ML model · runs entirely on the watch</div>
+              <div className="text-base font-bold text-white">On-Device Fall Detection</div>
+              <div className="text-sm text-purple-300/60 mt-0.5">ML model · runs entirely on the watch</div>
             </div>
           </div>
-          <p className="text-xl text-white/55 leading-relaxed">
+          <p className="text-base text-white/55 leading-relaxed">
             A Logistic Regression model trained on the SisFall dataset (38 subjects) detects falls by recognising a sharp impact followed by prolonged stillness — all processed on the watch itself, with no internet required.
           </p>
-          <div className="grid grid-cols-3 gap-4 mt-auto">
+          <div className="grid grid-cols-3 gap-3 mt-auto">
             {[['38', 'subjects'], ['15', 'fall types'], ['&lt;10 s', 'to alert']].map(([val, label]) => (
-              <div key={label} className="bg-black/20 border border-purple-400/15 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-purple-300" dangerouslySetInnerHTML={{ __html: val }} />
-                <div className="text-sm text-white/30 mt-0.5">{label}</div>
+              <div key={label} className="bg-black/20 border border-purple-400/15 rounded-lg p-3 text-center">
+                <div className="text-lg font-bold text-purple-300" dangerouslySetInnerHTML={{ __html: val }} />
+                <div className="text-xs text-white/30 mt-0.5">{label}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* ── 2. Dual-Signal Geofencing ── */}
-        <div className="rounded-2xl bg-white/5 border border-green-400/25 p-8 flex flex-col gap-5">
-          <div className="flex items-center gap-5">
-            <div className="p-4 rounded-xl bg-green-400/10 shrink-0">
-              <Navigation2 className="w-9 h-9 text-green-400" />
+        <div className="rounded-2xl bg-white/5 border border-green-400/25 p-6 flex flex-col gap-4">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-xl bg-green-400/10 shrink-0">
+              <Navigation2 className="w-7 h-7 text-green-400" />
             </div>
             <div>
-              <div className="text-lg font-bold text-white">Dual-Signal Geofencing</div>
-              <div className="text-base text-green-400/60 mt-0.5">GPS + motion sensor · no false alarms</div>
+              <div className="text-base font-bold text-white">Dual-Signal Geofencing</div>
+              <div className="text-sm text-green-400/60 mt-0.5">GPS + motion sensor · no false alarms</div>
             </div>
           </div>
-          <p className="text-xl text-white/55 leading-relaxed">
+          <p className="text-base text-white/55 leading-relaxed">
             An alert only triggers when both GPS distance and motion sensor agree the senior has left the safe zone — preventing false alarms caused by GPS signal drift indoors.
           </p>
-          <div className="grid grid-cols-3 gap-4 mt-auto">
+          <div className="grid grid-cols-3 gap-3 mt-auto">
             {[
               { label: 'Safe',     val: '< 30 m',  cls: 'text-green-400' },
               { label: 'Drifting', val: '30–50 m', cls: 'text-amber-400' },
               { label: 'Alert',    val: '> 50 m',  cls: 'text-red-400'   },
             ].map(({ label, val, cls }) => (
-              <div key={label} className="bg-black/20 border border-white/10 rounded-lg p-4 text-center">
-                <div className={`text-2xl font-bold ${cls}`}>{val}</div>
-                <div className="text-sm text-white/30 mt-0.5">{label}</div>
+              <div key={label} className="bg-black/20 border border-white/10 rounded-lg p-3 text-center">
+                <div className={`text-lg font-bold ${cls}`}>{val}</div>
+                <div className="text-xs text-white/30 mt-0.5">{label}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* ── 3. Haversine Distance Engine ── */}
-        <div className="rounded-2xl bg-white/5 border border-sky-400/25 p-8 flex flex-col gap-5">
-          <div className="flex items-center gap-5">
-            <div className="p-4 rounded-xl bg-sky-400/10 shrink-0">
-              <MapPin className="w-9 h-9 text-sky-300" />
+        <div className="rounded-2xl bg-white/5 border border-sky-400/25 p-6 flex flex-col gap-4">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-xl bg-sky-400/10 shrink-0">
+              <MapPin className="w-7 h-7 text-sky-300" />
             </div>
             <div>
-              <div className="text-lg font-bold text-white">Haversine Distance Engine</div>
-              <div className="text-base text-sky-300/60 mt-0.5">Accurate to metres · shows direction</div>
+              <div className="text-base font-bold text-white">Haversine Distance Engine</div>
+              <div className="text-sm text-sky-300/60 mt-0.5">Accurate to metres · shows direction</div>
             </div>
           </div>
-          <p className="text-xl text-white/55 leading-relaxed">
+          <p className="text-base text-white/55 leading-relaxed">
             Distance from the anchor point is calculated using the curvature of the Earth, giving metre-level accuracy. The bearing is also computed to show caregivers which direction the senior has moved.
           </p>
-          <div className="grid grid-cols-2 gap-4 mt-auto">
+          <div className="grid grid-cols-2 gap-3 mt-auto">
             {[['Metre-level', 'distance accuracy'], ['Live bearing', 'direction on watch']].map(([val, label]) => (
-              <div key={label} className="bg-black/20 border border-sky-400/15 rounded-lg p-4 text-center">
-                <div className="text-xl font-bold text-sky-300">{val}</div>
-                <div className="text-sm text-white/30 mt-0.5">{label}</div>
+              <div key={label} className="bg-black/20 border border-sky-400/15 rounded-lg p-3 text-center">
+                <div className="text-base font-bold text-sky-300">{val}</div>
+                <div className="text-xs text-white/30 mt-0.5">{label}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* ── 4. Performance & Battery ── */}
-        <div className="rounded-2xl bg-white/5 border border-amber-400/25 p-8 flex flex-col gap-5">
-          <div className="flex items-center gap-5">
-            <div className="p-4 rounded-xl bg-amber-400/10 shrink-0">
-              <Cpu className="w-9 h-9 text-amber-400" />
+        <div className="rounded-2xl bg-white/5 border border-amber-400/25 p-6 flex flex-col gap-4">
+          <div className="flex items-center gap-4">
+            <div className="p-3 rounded-xl bg-amber-400/10 shrink-0">
+              <Cpu className="w-7 h-7 text-amber-400" />
             </div>
             <div>
-              <div className="text-lg font-bold text-white">Performance &amp; Battery</div>
-              <div className="text-base text-amber-400/60 mt-0.5">Adaptive polling · built for all-day wear</div>
+              <div className="text-base font-bold text-white">Performance &amp; Battery</div>
+              <div className="text-sm text-amber-400/60 mt-0.5">Adaptive polling · built for all-day wear</div>
             </div>
           </div>
-          <p className="text-xl text-white/55 leading-relaxed">
+          <p className="text-base text-white/55 leading-relaxed">
             Location updates slow down when the senior is still and speed up when they start walking — conserving battery without sacrificing responsiveness.
           </p>
-          <div className="space-y-3 mt-auto">
+          <div className="space-y-2 mt-auto">
             {[
               { label: 'GPS while still',    val: 'Every 60 s',   cls: 'text-white/50'  },
               { label: 'GPS while walking',  val: 'Every 10 s',   cls: 'text-amber-300' },
               { label: 'Fall confirmation',  val: '~3 s window',  cls: 'text-sky-300'   },
             ].map(({ label, val, cls }) => (
-              <div key={label} className="flex items-center justify-between py-3 border-b border-white/5 last:border-0">
-                <span className="text-base text-white/45">{label}</span>
-                <span className={`text-base font-bold ${cls}`}>{val}</span>
+              <div key={label} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
+                <span className="text-sm text-white/45">{label}</span>
+                <span className={`text-sm font-bold ${cls}`}>{val}</span>
               </div>
             ))}
           </div>
@@ -466,10 +466,10 @@ const slides: Slide[] = [
     subtitle: undefined,
     content: (
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 'calc(100vh - 160px)', paddingBottom: '80px', width: '100%', alignItems: 'center' }}>
-      <div className="flex flex-col items-center w-full max-w-6xl" style={{ gap: '32px' }}>
+      <div className="flex flex-col items-center w-full max-w-6xl" style={{ gap: '24px' }}>
 
         {/* 3 team member cards */}
-        <div className="grid grid-cols-3 gap-10 w-full">
+        <div className="grid grid-cols-3 gap-8 w-full">
           {[
             {
               name: 'Ujwal',
@@ -510,31 +510,31 @@ const slides: Slide[] = [
           ].map(({ name, handle, role, accentCls, stripCls, badgeCls, nameCls, photo, bio, credit }) => (
             <div key={name} className={`rounded-2xl bg-white/5 border ${accentCls} flex flex-col overflow-hidden`}>
               <div className={`h-1 ${stripCls}`} />
-              <div className="p-8 flex flex-col gap-6 flex-1">
+              <div className="p-6 flex flex-col gap-5 flex-1">
 
                 {/* Photo */}
-                <div className={`w-full h-[270px] rounded-xl overflow-hidden border ${accentCls}`}>
+                <div className={`w-full h-52 rounded-xl overflow-hidden border ${accentCls}`}>
                   <img src={photo} alt={name} className="w-full h-full object-cover object-top" />
                 </div>
 
                 {/* Name + role */}
                 <div>
-                  <h3 className={`text-3xl font-bold font-display ${nameCls}`}>{name}</h3>
+                  <h3 className={`text-2xl font-bold font-display ${nameCls}`}>{name}</h3>
                   <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                    <span className={`text-sm font-mono font-bold px-3 py-1.5 rounded border ${badgeCls}`}>
+                    <span className={`text-xs font-mono font-bold px-2.5 py-1 rounded border ${badgeCls}`}>
                       {handle}
                     </span>
-                    <span className="text-sm text-white/30">{role}</span>
+                    <span className="text-xs text-white/30">{role}</span>
                   </div>
                 </div>
 
                 {/* Bio */}
-                <p className="text-base text-white/50 leading-relaxed">{bio}</p>
+                <p className="text-sm text-white/50 leading-relaxed">{bio}</p>
 
                 {/* Credit */}
-                <div className={`mt-auto pt-4 border-t border-white/10`}>
-                  <div className="text-sm font-mono text-white/30 uppercase tracking-widest mb-1.5">Why this team</div>
-                  <p className="text-base text-white/70 leading-relaxed">{credit}</p>
+                <div className={`mt-auto pt-3 border-t border-white/10`}>
+                  <div className="text-xs font-mono text-white/30 uppercase tracking-widest mb-1">Why this team</div>
+                  <p className="text-sm text-white/70 leading-relaxed">{credit}</p>
                 </div>
               </div>
             </div>
@@ -542,13 +542,13 @@ const slides: Slide[] = [
         </div>
 
         {/* Vision statement */}
-        <div className="w-full p-9 rounded-2xl bg-green-400/5 border border-green-400/20 text-center relative overflow-hidden">
+        <div className="w-full p-7 rounded-2xl bg-green-400/5 border border-green-400/20 text-center relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(74,222,128,0.05),transparent_70%)] pointer-events-none" />
-          <Heart className="w-8 h-8 text-green-400 mx-auto mb-4" />
-          <p className="text-xl font-bold text-white relative z-10">
+          <Heart className="w-6 h-6 text-green-400 mx-auto mb-3" />
+          <p className="text-base font-bold text-white relative z-10">
             Our Vision — A world where seniors explore their neighbourhood freely,
           </p>
-          <p className="text-xl text-green-400 italic font-light mt-2 relative z-10">
+          <p className="text-base text-green-400 italic font-light mt-1.5 relative z-10">
             knowing ANCHOR is silently watching, so their families don't have to.
           </p>
         </div>
@@ -636,7 +636,7 @@ export default function App() {
             </div>
             <span className="font-display font-bold tracking-tight text-lg text-white">ANCHOR</span>
           </div>
-          <div className="hidden md:flex items-center gap-5">
+          <div className="hidden md:flex items-center gap-4">
             <span className="text-xs font-mono text-white/20 uppercase tracking-[0.2em]">
               {slide.subtitle}
             </span>
