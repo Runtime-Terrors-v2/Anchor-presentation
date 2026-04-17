@@ -8,10 +8,6 @@ import uiCommunityCard from './assets/screenshots/ui_community_card.mp4';
 import photoUjwal from './assets/team/photo_ujwal.jpg';
 import photoHarshdeep from './assets/team/photo_harshdeep.jpeg';
 import photoArda from './assets/team/photo_arda.jpg';
-import StorySlide from './StorySlide';
-import GTMSlide from './GTMSlide';
-import DemoSlide from './DemoSlide';
-import MobileDemoSlide from './MobileDemoSlide';
 import {
   ChevronLeft,
   ChevronRight,
@@ -28,6 +24,7 @@ import {
   Navigation2,
 
   Cpu,
+  Play,
 } from 'lucide-react';
 
 // ---------------------------------------------------------------------------
@@ -58,7 +55,7 @@ const ProgressBar = ({ current, total }: { current: number; total: number }) => 
 const Navigation = ({
   onPrev, onNext, current, total,
 }: { onPrev: () => void; onNext: () => void; current: number; total: number }) => (
-  <div className="fixed bottom-8 right-8 flex items-center gap-5 z-50">
+  <div className="fixed bottom-8 right-8 flex items-center gap-4 z-50">
     <div className="text-sm font-mono text-white/40 mr-4">
       {String(current + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
     </div>
@@ -83,34 +80,6 @@ const Navigation = ({
 // Slide content helpers
 // ---------------------------------------------------------------------------
 
-function AnchorAnimation() {
-  const [phase, setPhase] = useState<'in' | 'out'>('in');
-  useEffect(() => {
-    const t = setTimeout(() => setPhase('out'), 800);
-    return () => clearTimeout(t);
-  }, []);
-  return (
-    <motion.svg
-      width={120}
-      height={120}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="#4ade80"
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      style={{ position: 'relative', zIndex: 1 }}
-      initial={{ opacity: 0, scale: 0.6 }}
-      animate={phase === 'in' ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.2 }}
-      transition={{ duration: 0.5 }}
-    >
-      <circle cx="12" cy="5" r="3" />
-      <line x1="12" y1="8" x2="12" y2="22" />
-      <path d="M5 15H2a10 10 0 0 0 20 0h-3" />
-    </motion.svg>
-  );
-}
-
 // ---------------------------------------------------------------------------
 // Slides
 // ---------------------------------------------------------------------------
@@ -118,17 +87,7 @@ function AnchorAnimation() {
 const slides: Slide[] = [
 
   // =========================================================================
-  // SLIDE 1 — THE STORY (new)
-  // =========================================================================
-  {
-    id: 'story',
-    title: 'The Story',
-    subtitle: undefined,
-    content: <StorySlide />,
-  },
-
-  // =========================================================================
-  // SLIDE 2 — THE HOOK
+  // SLIDE 1 — THE HOOK
   // =========================================================================
   {
     id: 'hook',
@@ -144,9 +103,9 @@ const slides: Slide[] = [
         <div className="flex flex-col gap-7 text-left pl-12">
 
           {/* Logo + eyebrow */}
-          <div className="flex items-center gap-5">
+          <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-2xl bg-white/5 border border-green-400/30 flex items-center justify-center shadow-[0_0_40px_-8px_rgba(74,222,128,0.4)]">
-              <Anchor className="w-9 h-9 text-green-400" />
+              <Anchor className="w-7 h-7 text-green-400" />
             </div>
             <div className="flex items-center gap-2 text-white/30 font-mono text-xs uppercase tracking-widest">
               <span>Local Lifestyle Track</span>
@@ -158,7 +117,7 @@ const slides: Slide[] = [
           {/* Title */}
           <div className="space-y-2">
             <p className="text-green-400 font-mono text-sm uppercase tracking-[0.3em]">Project</p>
-            <h1 className="font-display font-bold tracking-tighter text-white leading-none" style={{ fontSize: '7.5rem' }}>
+            <h1 className="text-8xl font-display font-bold tracking-tighter text-white leading-none">
               ANCHOR
             </h1>
             <p className="text-white/40 text-base italic font-light">
@@ -197,37 +156,17 @@ const slides: Slide[] = [
   },
 
   // =========================================================================
-  // SLIDE 3 — THE LIVE DEMO
-  // =========================================================================
-  {
-    id: 'demo',
-    title: 'The Live Demo',
-    subtitle: undefined,
-    content: <DemoSlide />,
-  },
-
-  // =========================================================================
-  // SLIDE 4 — MOBILE APP DEMO
-  // =========================================================================
-  {
-    id: 'mobile-demo',
-    title: 'Mobile App Demo',
-    subtitle: undefined,
-    content: <MobileDemoSlide />,
-  },
-
-  // =========================================================================
-  // SLIDE 5 — THE CRAFTSMANSHIP
+  // SLIDE 2 — THE CRAFTSMANSHIP
   // =========================================================================
   {
     id: 'craftsmanship',
     title: 'The Craftsmanship',
     subtitle: undefined,
     content: (
-      <div className="flex flex-col w-full max-w-7xl gap-5">
+      <div className="flex flex-col w-full max-w-7xl gap-4">
 
         {/* 4 screen cards */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 gap-3">
           {[
             {
               title: 'Main Menu',
@@ -287,16 +226,16 @@ const slides: Slide[] = [
               </div>
 
               {/* Label */}
-              <div className="p-3.5 flex flex-col gap-2">
+              <div className="p-2.5 flex flex-col gap-1.5">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-sm text-white">{title}</span>
-                  <span className={`text-[10px] font-mono font-bold px-2 py-1 rounded border ${badgeCls} uppercase tracking-wider`}>
+                  <span className="font-bold text-xs text-white">{title}</span>
+                  <span className={`text-[8px] font-mono font-bold px-1.5 py-0.5 rounded border ${badgeCls} uppercase tracking-wider`}>
                     {badge}
                   </span>
                 </div>
                 <ul className="space-y-0.5">
                   {tags.map((t) => (
-                    <li key={t} className="flex items-center gap-1.5 text-xs text-white/45">
+                    <li key={t} className="flex items-center gap-1.5 text-[9px] text-white/45">
                       <div className={`w-1 h-1 rounded-full shrink-0 ${stripCls}`} />
                       {t}
                     </li>
@@ -308,17 +247,17 @@ const slides: Slide[] = [
         </div>
 
         {/* Bottom highlight bar */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 gap-3">
           {[
-            { icon: <Zap className="w-5 h-5 text-green-400" />,    title: 'Smooth Animations',   body: 'Swiper transitions at 260 ms — fluid enough to feel responsive, slow enough for elderly users.' },
-            { icon: <Vibrate className="w-5 h-5 text-sky-300" />,  title: 'Haptic Feedback',      body: '1 gentle pulse on drift · 3 firm pulses on alert — no need to look at the screen.' },
-            { icon: <Users className="w-5 h-5 text-amber-400" />,  title: 'Elderly-First Design', body: 'High-contrast dark theme, large text, minimal steps — usable without reading glasses.' },
+            { icon: <Zap className="w-4 h-4 text-green-400" />,    title: 'Smooth Animations',   body: 'Swiper transitions at 260 ms — fluid enough to feel responsive, slow enough for elderly users.' },
+            { icon: <Vibrate className="w-4 h-4 text-sky-300" />,  title: 'Haptic Feedback',      body: '1 gentle pulse on drift · 3 firm pulses on alert — no need to look at the screen.' },
+            { icon: <Users className="w-4 h-4 text-amber-400" />,  title: 'Elderly-First Design', body: 'High-contrast dark theme, large text, minimal steps — usable without reading glasses.' },
           ].map(({ icon, title, body }) => (
-            <div key={title} className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/10">
-              <div className="p-2 rounded-lg bg-white/5 shrink-0">{icon}</div>
+            <div key={title} className="flex items-start gap-3 p-3 rounded-xl bg-white/5 border border-white/10">
+              <div className="p-1.5 rounded-lg bg-white/5 shrink-0">{icon}</div>
               <div>
-                <div className="font-bold text-sm text-white mb-1">{title}</div>
-                <div className="text-sm text-white/45 leading-relaxed">{body}</div>
+                <div className="font-bold text-xs text-white mb-0.5">{title}</div>
+                <div className="text-[11px] text-white/45 leading-relaxed">{body}</div>
               </div>
             </div>
           ))}
@@ -328,148 +267,163 @@ const slides: Slide[] = [
   },
 
   // =========================================================================
-  // SLIDE 5 — INNOVATION HIGHLIGHT
+  // SLIDE 3 — THE LIVE DEMO
+  // =========================================================================
+  {
+    id: 'demo',
+    title: 'The Live Demo',
+    subtitle: undefined,
+    content: (
+      <div className="flex flex-col items-center justify-center w-full max-w-lg gap-8 text-center">
+
+        {/* Pulsing icon */}
+        <div className="relative flex items-center justify-center">
+          <div className="absolute w-32 h-32 rounded-full bg-green-400/10 animate-ping" />
+          <div className="absolute w-24 h-24 rounded-full bg-green-400/10" />
+          <div className="w-20 h-20 rounded-full bg-green-400/15 border border-green-400/40 flex items-center justify-center shadow-[0_0_40px_-8px_rgba(74,222,128,0.5)]">
+            <Play className="w-8 h-8 text-green-400 ml-1" />
+          </div>
+        </div>
+
+        {/* Text */}
+        <div className="space-y-3">
+          <p className="text-xs font-mono text-green-400/60 uppercase tracking-[0.3em]">Live Demo</p>
+          <h2 className="text-4xl font-display font-bold text-white tracking-tight">In Progress</h2>
+        </div>
+      </div>
+    ),
+  },
+
+  // =========================================================================
+  // SLIDE 4 — INNOVATION HIGHLIGHT
   // =========================================================================
   {
     id: 'innovation',
     title: 'Innovation Highlight',
     subtitle: undefined,
     content: (
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 'calc(100vh - 160px)', paddingBottom: '80px', width: '100%', alignItems: 'center' }}>
-      <div className="grid grid-cols-2 gap-8 w-full max-w-7xl">
+      <div className="grid grid-cols-2 gap-4 w-full max-w-7xl">
 
         {/* ── 1. ML Fall Classifier ── */}
-        <div className="rounded-2xl bg-white/5 border border-purple-400/25 p-8 flex flex-col gap-5">
-          <div className="flex items-center gap-5">
-            <div className="p-4 rounded-xl bg-purple-400/10 shrink-0">
-              <Brain className="w-9 h-9 text-purple-400" />
+        <div className="rounded-2xl bg-white/5 border border-purple-400/25 p-5 flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-purple-400/10 shrink-0">
+              <Brain className="w-5 h-5 text-purple-400" />
             </div>
             <div>
-              <div className="text-lg font-bold text-white">On-Device Fall Detection</div>
-              <div className="text-base text-purple-300/60 mt-0.5">ML model · runs entirely on the watch</div>
+              <div className="font-bold text-white">On-Device Fall Detection</div>
+              <div className="text-[10px] text-purple-300/60 mt-0.5">ML model · runs entirely on the watch</div>
             </div>
           </div>
-          <p className="text-xl text-white/55 leading-relaxed">
+          <p className="text-sm text-white/55 leading-relaxed">
             A Logistic Regression model trained on the SisFall dataset (38 subjects) detects falls by recognising a sharp impact followed by prolonged stillness — all processed on the watch itself, with no internet required.
           </p>
-          <div className="grid grid-cols-3 gap-4 mt-auto">
+          <div className="grid grid-cols-3 gap-2 mt-auto">
             {[['38', 'subjects'], ['15', 'fall types'], ['&lt;10 s', 'to alert']].map(([val, label]) => (
-              <div key={label} className="bg-black/20 border border-purple-400/15 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-purple-300" dangerouslySetInnerHTML={{ __html: val }} />
-                <div className="text-sm text-white/30 mt-0.5">{label}</div>
+              <div key={label} className="bg-black/20 border border-purple-400/15 rounded-lg p-2 text-center">
+                <div className="text-sm font-bold text-purple-300" dangerouslySetInnerHTML={{ __html: val }} />
+                <div className="text-[9px] text-white/30 mt-0.5">{label}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* ── 2. Dual-Signal Geofencing ── */}
-        <div className="rounded-2xl bg-white/5 border border-green-400/25 p-8 flex flex-col gap-5">
-          <div className="flex items-center gap-5">
-            <div className="p-4 rounded-xl bg-green-400/10 shrink-0">
-              <Navigation2 className="w-9 h-9 text-green-400" />
+        <div className="rounded-2xl bg-white/5 border border-green-400/25 p-5 flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-green-400/10 shrink-0">
+              <Navigation2 className="w-5 h-5 text-green-400" />
             </div>
             <div>
-              <div className="text-lg font-bold text-white">Dual-Signal Geofencing</div>
-              <div className="text-base text-green-400/60 mt-0.5">GPS + motion sensor · no false alarms</div>
+              <div className="font-bold text-white">Dual-Signal Geofencing</div>
+              <div className="text-[10px] text-green-400/60 mt-0.5">GPS + motion sensor · no false alarms</div>
             </div>
           </div>
-          <p className="text-xl text-white/55 leading-relaxed">
+          <p className="text-sm text-white/55 leading-relaxed">
             An alert only triggers when both GPS distance and motion sensor agree the senior has left the safe zone — preventing false alarms caused by GPS signal drift indoors.
           </p>
-          <div className="grid grid-cols-3 gap-4 mt-auto">
+          <div className="grid grid-cols-3 gap-2 mt-auto">
             {[
               { label: 'Safe',     val: '< 30 m',  cls: 'text-green-400' },
               { label: 'Drifting', val: '30–50 m', cls: 'text-amber-400' },
               { label: 'Alert',    val: '> 50 m',  cls: 'text-red-400'   },
             ].map(({ label, val, cls }) => (
-              <div key={label} className="bg-black/20 border border-white/10 rounded-lg p-4 text-center">
-                <div className={`text-2xl font-bold ${cls}`}>{val}</div>
-                <div className="text-sm text-white/30 mt-0.5">{label}</div>
+              <div key={label} className="bg-black/20 border border-white/10 rounded-lg p-2 text-center">
+                <div className={`text-sm font-bold ${cls}`}>{val}</div>
+                <div className="text-[9px] text-white/30 mt-0.5">{label}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* ── 3. Haversine Distance Engine ── */}
-        <div className="rounded-2xl bg-white/5 border border-sky-400/25 p-8 flex flex-col gap-5">
-          <div className="flex items-center gap-5">
-            <div className="p-4 rounded-xl bg-sky-400/10 shrink-0">
-              <MapPin className="w-9 h-9 text-sky-300" />
+        <div className="rounded-2xl bg-white/5 border border-sky-400/25 p-5 flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-sky-400/10 shrink-0">
+              <MapPin className="w-5 h-5 text-sky-300" />
             </div>
             <div>
-              <div className="text-lg font-bold text-white">Haversine Distance Engine</div>
-              <div className="text-base text-sky-300/60 mt-0.5">Accurate to metres · shows direction</div>
+              <div className="font-bold text-white">Haversine Distance Engine</div>
+              <div className="text-[10px] text-sky-300/60 mt-0.5">Accurate to metres · shows direction</div>
             </div>
           </div>
-          <p className="text-xl text-white/55 leading-relaxed">
+          <p className="text-sm text-white/55 leading-relaxed">
             Distance from the anchor point is calculated using the curvature of the Earth, giving metre-level accuracy. The bearing is also computed to show caregivers which direction the senior has moved.
           </p>
-          <div className="grid grid-cols-2 gap-4 mt-auto">
+          <div className="grid grid-cols-2 gap-2 mt-auto">
             {[['Metre-level', 'distance accuracy'], ['Live bearing', 'direction on watch']].map(([val, label]) => (
-              <div key={label} className="bg-black/20 border border-sky-400/15 rounded-lg p-4 text-center">
-                <div className="text-xl font-bold text-sky-300">{val}</div>
-                <div className="text-sm text-white/30 mt-0.5">{label}</div>
+              <div key={label} className="bg-black/20 border border-sky-400/15 rounded-lg p-2 text-center">
+                <div className="text-sm font-bold text-sky-300">{val}</div>
+                <div className="text-[9px] text-white/30 mt-0.5">{label}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* ── 4. Performance & Battery ── */}
-        <div className="rounded-2xl bg-white/5 border border-amber-400/25 p-8 flex flex-col gap-5">
-          <div className="flex items-center gap-5">
-            <div className="p-4 rounded-xl bg-amber-400/10 shrink-0">
-              <Cpu className="w-9 h-9 text-amber-400" />
+        <div className="rounded-2xl bg-white/5 border border-amber-400/25 p-5 flex flex-col gap-3">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-amber-400/10 shrink-0">
+              <Cpu className="w-5 h-5 text-amber-400" />
             </div>
             <div>
-              <div className="text-lg font-bold text-white">Performance &amp; Battery</div>
-              <div className="text-base text-amber-400/60 mt-0.5">Adaptive polling · built for all-day wear</div>
+              <div className="font-bold text-white">Performance &amp; Battery</div>
+              <div className="text-[10px] text-amber-400/60 mt-0.5">Adaptive polling · built for all-day wear</div>
             </div>
           </div>
-          <p className="text-xl text-white/55 leading-relaxed">
+          <p className="text-sm text-white/55 leading-relaxed">
             Location updates slow down when the senior is still and speed up when they start walking — conserving battery without sacrificing responsiveness.
           </p>
-          <div className="space-y-3 mt-auto">
+          <div className="space-y-1.5 mt-auto">
             {[
               { label: 'GPS while still',    val: 'Every 60 s',   cls: 'text-white/50'  },
               { label: 'GPS while walking',  val: 'Every 10 s',   cls: 'text-amber-300' },
               { label: 'Fall confirmation',  val: '~3 s window',  cls: 'text-sky-300'   },
             ].map(({ label, val, cls }) => (
-              <div key={label} className="flex items-center justify-between py-3 border-b border-white/5 last:border-0">
-                <span className="text-base text-white/45">{label}</span>
-                <span className={`text-base font-bold ${cls}`}>{val}</span>
+              <div key={label} className="flex items-center justify-between py-1.5 border-b border-white/5 last:border-0">
+                <span className="text-xs text-white/45">{label}</span>
+                <span className={`text-xs font-bold ${cls}`}>{val}</span>
               </div>
             ))}
           </div>
         </div>
 
       </div>
-      </div>
     ),
   },
 
   // =========================================================================
-  // SLIDE 6 — GO TO MARKET (new)
-  // =========================================================================
-  {
-    id: 'gtm',
-    title: 'Go To Market',
-    subtitle: undefined,
-    content: <GTMSlide />,
-  },
-
-  // =========================================================================
-  // SLIDE 7 — THE DREAM TEAM
+  // SLIDE 5 — THE DREAM TEAM
   // =========================================================================
   {
     id: 'team',
     title: 'The Dream Team',
     subtitle: undefined,
     content: (
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 'calc(100vh - 160px)', paddingBottom: '80px', width: '100%', alignItems: 'center' }}>
-      <div className="flex flex-col items-center w-full max-w-6xl" style={{ gap: '32px' }}>
+      <div className="flex flex-col items-center w-full max-w-6xl gap-6">
 
         {/* 3 team member cards */}
-        <div className="grid grid-cols-3 gap-10 w-full">
+        <div className="grid grid-cols-3 gap-6 w-full">
           {[
             {
               name: 'Ujwal',
@@ -510,31 +464,31 @@ const slides: Slide[] = [
           ].map(({ name, handle, role, accentCls, stripCls, badgeCls, nameCls, photo, bio, credit }) => (
             <div key={name} className={`rounded-2xl bg-white/5 border ${accentCls} flex flex-col overflow-hidden`}>
               <div className={`h-1 ${stripCls}`} />
-              <div className="p-8 flex flex-col gap-6 flex-1">
+              <div className="p-5 flex flex-col gap-4 flex-1">
 
                 {/* Photo */}
-                <div className={`w-full h-[270px] rounded-xl overflow-hidden border ${accentCls}`}>
+                <div className={`w-full h-40 rounded-xl overflow-hidden border ${accentCls}`}>
                   <img src={photo} alt={name} className="w-full h-full object-cover object-top" />
                 </div>
 
                 {/* Name + role */}
                 <div>
-                  <h3 className={`text-3xl font-bold font-display ${nameCls}`}>{name}</h3>
-                  <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                    <span className={`text-sm font-mono font-bold px-3 py-1.5 rounded border ${badgeCls}`}>
+                  <h3 className={`text-xl font-bold font-display ${nameCls}`}>{name}</h3>
+                  <div className="flex items-center gap-2 mt-1 flex-wrap">
+                    <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded border ${badgeCls}`}>
                       {handle}
                     </span>
-                    <span className="text-sm text-white/30">{role}</span>
+                    <span className="text-[10px] text-white/30">{role}</span>
                   </div>
                 </div>
 
                 {/* Bio */}
-                <p className="text-base text-white/50 leading-relaxed">{bio}</p>
+                <p className="text-xs text-white/50 leading-relaxed">{bio}</p>
 
                 {/* Credit */}
-                <div className={`mt-auto pt-4 border-t border-white/10`}>
-                  <div className="text-sm font-mono text-white/30 uppercase tracking-widest mb-1.5">Why this team</div>
-                  <p className="text-base text-white/70 leading-relaxed">{credit}</p>
+                <div className={`mt-auto pt-3 border-t border-white/10`}>
+                  <div className="text-[9px] font-mono text-white/30 uppercase tracking-widest mb-1">Why this team</div>
+                  <p className="text-xs text-white/70 leading-relaxed">{credit}</p>
                 </div>
               </div>
             </div>
@@ -542,17 +496,16 @@ const slides: Slide[] = [
         </div>
 
         {/* Vision statement */}
-        <div className="w-full p-9 rounded-2xl bg-green-400/5 border border-green-400/20 text-center relative overflow-hidden">
+        <div className="w-full p-5 rounded-2xl bg-green-400/5 border border-green-400/20 text-center relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(74,222,128,0.05),transparent_70%)] pointer-events-none" />
-          <Heart className="w-8 h-8 text-green-400 mx-auto mb-4" />
-          <p className="text-xl font-bold text-white relative z-10">
+          <Heart className="w-5 h-5 text-green-400 mx-auto mb-2" />
+          <p className="text-sm font-bold text-white relative z-10">
             Our Vision — A world where seniors explore their neighbourhood freely,
           </p>
-          <p className="text-xl text-green-400 italic font-light mt-2 relative z-10">
+          <p className="text-sm text-green-400 italic font-light mt-1 relative z-10">
             knowing ANCHOR is silently watching, so their families don't have to.
           </p>
         </div>
-      </div>
       </div>
     ),
   },
@@ -564,32 +517,20 @@ const slides: Slide[] = [
 export default function App() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [direction, setDirection] = useState(0);
-  const [showAnchorTransition, setShowAnchorTransition] = useState(false);
 
   const nextSlide = useCallback(() => {
-    if (showAnchorTransition) return;
-    if (currentSlide === 0) {
-      setShowAnchorTransition(true);
-      setTimeout(() => {
-        setShowAnchorTransition(false);
-        setDirection(1);
-        setCurrentSlide(1);
-      }, 1300);
-      return;
-    }
     if (currentSlide < slides.length - 1) {
       setDirection(1);
       setCurrentSlide((s) => s + 1);
     }
-  }, [currentSlide, showAnchorTransition]);
+  }, [currentSlide]);
 
   const prevSlide = useCallback(() => {
-    if (showAnchorTransition) return;
     if (currentSlide > 0) {
       setDirection(-1);
       setCurrentSlide((s) => s - 1);
     }
-  }, [currentSlide, showAnchorTransition]);
+  }, [currentSlide]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -609,9 +550,9 @@ export default function App() {
 
         {/* Background glow */}
         <div className="fixed inset-0 z-0 pointer-events-none">
-          {/* Hook slide full-screen background image */}
+          {/* Slide 1 full-screen background image */}
           <AnimatePresence>
-            {currentSlide === 1 && (
+            {currentSlide === 0 && (
               <motion.div
                 key="slide1-bg"
                 className="absolute inset-0 bg-cover bg-center"
@@ -636,7 +577,7 @@ export default function App() {
             </div>
             <span className="font-display font-bold tracking-tight text-lg text-white">ANCHOR</span>
           </div>
-          <div className="hidden md:flex items-center gap-5">
+          <div className="hidden md:flex items-center gap-4">
             <span className="text-xs font-mono text-white/20 uppercase tracking-[0.2em]">
               {slide.subtitle}
             </span>
@@ -690,29 +631,6 @@ export default function App() {
         </main>
 
         <Navigation onPrev={prevSlide} onNext={nextSlide} current={currentSlide} total={slides.length} />
-
-        {/* Anchor transition overlay — slide 0 → 1 only */}
-        <AnimatePresence>
-          {showAnchorTransition && (
-            <motion.div
-              key="anchor-overlay"
-              style={{
-                position: 'fixed', inset: 0, background: '#000', zIndex: 100,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}
-              initial={{ opacity: 1 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div style={{
-                position: 'absolute', inset: 0,
-                background: 'radial-gradient(ellipse at center, rgba(74,222,128,0.15) 0%, transparent 60%)',
-              }} />
-              <AnchorAnimation />
-            </motion.div>
-          )}
-        </AnimatePresence>
         <ProgressBar current={currentSlide} total={slides.length} />
       </div>
     </>
