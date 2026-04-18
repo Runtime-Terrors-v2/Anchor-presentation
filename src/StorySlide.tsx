@@ -16,7 +16,7 @@ export default function StorySlide() {
       }}
     >
       {/* Left column — 55% */}
-      <div style={{ flex: '0 0 55%', overflow: 'hidden', borderRadius: '16px', clipPath: 'inset(0 1cm 0 0 round 16px)' }}>
+      <div style={{ flex: '0 0 55%', overflow: 'hidden', borderRadius: '16px', clipPath: 'inset(0 1cm 0 0 round 16px)', transform: 'translate(0.7cm, -1cm)' }}>
         <video
           src={videoSrc}
           autoPlay
