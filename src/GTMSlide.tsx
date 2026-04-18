@@ -92,7 +92,7 @@ export default function GTMSlide() {
             A flagship use case for Huawei's ecosystem
           </div>
           <p style={{ fontSize: '13px', color: '#8a8a8a', margin: 0 }}>
-            ANCHOR demonstrates HarmonyOS at its best — on-device ML, adaptive GPS, haptic UX, and privacy-first architecture. A senior lifestyle category leader.
+            ANCHOR demonstrates HarmonyOS at its best, on-device ML, adaptive GPS, haptic UX, and privacy-first architecture. A senior lifestyle category leader.
           </p>
           <span
             style={{ display: 'inline-block', background: 'rgba(0,136,255,0.1)', color: '#5bb8ff', border: '1px solid rgba(0,136,255,0.25)', fontSize: '10px', fontWeight: 700, letterSpacing: '0.15em', padding: '4px 10px', borderRadius: '20px', alignSelf: 'flex-start' }}
@@ -104,7 +104,7 @@ export default function GTMSlide() {
 
       {/* Bottom highlight box */}
       <div
-        style={{ marginTop: '18px', background: '#0d2010', border: '1px solid rgba(74,222,128,0.2)', borderRadius: '12px', padding: '18px 28px', textAlign: 'center', fontSize: '14px', fontWeight: 500, color: '#c8d8c8', flexShrink: 0 }}
+        style={{ marginTop: '18px', background: '#0d2010', border: '1px solid rgba(74,222,128,0.2)', borderRadius: '12px', padding: '18px 28px', textAlign: 'center', fontSize: '18px', fontWeight: 500, color: '#c8d8c8', flexShrink: 0 }}
       >
         Every <span className="text-green-400 font-bold">1%</span> of Singapore's senior population ={' '}
         <span className="text-green-400 font-bold">6,000 users</span>. Our target in year one:{' '}

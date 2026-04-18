@@ -90,24 +90,14 @@ function AnchorAnimation() {
     return () => clearTimeout(t);
   }, []);
   return (
-    <motion.svg
-      width={120}
-      height={120}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="#4ade80"
-      strokeWidth={1.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      style={{ position: 'relative', zIndex: 1 }}
+    <motion.div
+      style={{ position: 'relative', zIndex: 1, color: '#4ade80' }}
       initial={{ opacity: 0, scale: 0.6 }}
       animate={phase === 'in' ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 1.2 }}
       transition={{ duration: 0.5 }}
     >
-      <circle cx="12" cy="5" r="3" />
-      <line x1="12" y1="8" x2="12" y2="22" />
-      <path d="M5 15H2a10 10 0 0 0 20 0h-3" />
-    </motion.svg>
+      <Anchor width={120} height={120} strokeWidth={1.5} />
+    </motion.div>
   );
 }
 
@@ -176,7 +166,7 @@ const slides: Slide[] = [
               </div>
               <p className="text-white/70 text-sm leading-relaxed">
                 Active seniors (60+) who desire to explore local hubs
-                independently — without constant worry or supervision.
+                independently, without constant worry or supervision.
               </p>
             </div>
 
@@ -185,7 +175,7 @@ const slides: Slide[] = [
                 <AlertTriangle className="w-4 h-4" /> The Pain Point
               </div>
               <p className="text-white/70 text-sm leading-relaxed">
-                Seniors limit outings due to fear of disorientation —
+                Seniors limit outings due to fear of disorientation,
                 causing <strong className="text-white">social isolation</strong> and{' '}
                 <strong className="text-white">over-protection</strong> from well-meaning families.
               </p>
@@ -224,7 +214,7 @@ const slides: Slide[] = [
     title: 'The Craftsmanship',
     subtitle: undefined,
     content: (
-      <div className="flex flex-col w-full max-w-7xl gap-5">
+      <div className="flex flex-col w-full max-w-7xl gap-5" style={{ zoom: 0.9 }}>
 
         {/* 4 screen cards */}
         <div className="grid grid-cols-4 gap-4">
@@ -310,8 +300,8 @@ const slides: Slide[] = [
         {/* Bottom highlight bar */}
         <div className="grid grid-cols-3 gap-4">
           {[
-            { icon: <Zap className="w-5 h-5 text-green-400" />,    title: 'Smooth Animations',   body: 'Swiper transitions at 260 ms — fluid enough to feel responsive, slow enough for elderly users.' },
-            { icon: <Vibrate className="w-5 h-5 text-sky-300" />,  title: 'Haptic Feedback',      body: '1 gentle pulse on drift · 3 firm pulses on alert — no need to look at the screen.' },
+            { icon: <Zap className="w-5 h-5 text-green-400" />,    title: 'Smooth Animations',   body: 'Swiper transitions at 260 ms, fluid enough to feel responsive, slow enough for elderly users.' },
+            { icon: <Vibrate className="w-5 h-5 text-sky-300" />,  title: 'Haptic Feedback',      body: '1 gentle pulse on drift · 3 firm pulses on alert, no need to look at the screen.' },
             { icon: <Users className="w-5 h-5 text-amber-400" />,  title: 'Elderly-First Design', body: 'High-contrast dark theme, large text, minimal steps — usable without reading glasses.' },
           ].map(({ icon, title, body }) => (
             <div key={title} className="flex items-start gap-4 p-3 rounded-xl bg-white/5 border border-white/10">
@@ -335,7 +325,7 @@ const slides: Slide[] = [
     title: 'Innovation Highlight',
     subtitle: undefined,
     content: (
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 'calc(100vh - 160px)', paddingBottom: '80px', width: '100%', alignItems: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 'calc(100vh - 160px)', paddingBottom: '80px', width: '100%', alignItems: 'center', zoom: 0.85 }}>
       <div className="grid grid-cols-2 gap-6 w-full max-w-7xl">
 
         {/* ── 1. ML Fall Classifier ── */}
@@ -350,7 +340,7 @@ const slides: Slide[] = [
             </div>
           </div>
           <p className="text-base text-white/55 leading-relaxed">
-            A Logistic Regression model trained on the SisFall dataset (38 subjects) detects falls by recognising a sharp impact followed by prolonged stillness — all processed on the watch itself, with no internet required.
+            A Logistic Regression model trained on the SisFall dataset (38 subjects) detects falls by recognising a sharp impact followed by prolonged stillness, all processed on the watch itself, with no internet required.
           </p>
           <div className="grid grid-cols-3 gap-3 mt-auto">
             {[['38', 'subjects'], ['15', 'fall types'], ['&lt;10 s', 'to alert']].map(([val, label]) => (
@@ -374,7 +364,7 @@ const slides: Slide[] = [
             </div>
           </div>
           <p className="text-base text-white/55 leading-relaxed">
-            An alert only triggers when both GPS distance and motion sensor agree the senior has left the safe zone — preventing false alarms caused by GPS signal drift indoors.
+            An alert only triggers when both GPS distance and motion sensor agree the senior has left the safe zone, preventing false alarms caused by GPS signal drift indoors.
           </p>
           <div className="grid grid-cols-3 gap-3 mt-auto">
             {[
@@ -426,7 +416,7 @@ const slides: Slide[] = [
             </div>
           </div>
           <p className="text-base text-white/55 leading-relaxed">
-            Location updates slow down when the senior is still and speed up when they start walking — conserving battery without sacrificing responsiveness.
+            Location updates slow down when the senior is still and speed up when they start walking, conserving battery without sacrificing responsiveness.
           </p>
           <div className="space-y-2 mt-auto">
             {[
@@ -465,7 +455,7 @@ const slides: Slide[] = [
     title: 'The Dream Team',
     subtitle: undefined,
     content: (
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 'calc(100vh - 160px)', paddingBottom: '80px', width: '100%', alignItems: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 'calc(100vh - 160px)', paddingBottom: '80px', width: '100%', alignItems: 'center', zoom: 0.75 }}>
       <div className="flex flex-col items-center w-full max-w-6xl" style={{ gap: '24px' }}>
 
         {/* 3 team member cards */}
@@ -481,7 +471,7 @@ const slides: Slide[] = [
               nameCls: 'text-green-400',
               photo: photoUjwal,
               bio: 'MSc Cyber Security student & Former Data Scientist at Optum. Leveraging 3 years of industry experience to bridge data-driven insights with secure, agentic AI.',
-              credit: 'Built the dual-signal geofencing engine — GPS + accelerometer state machine, Haversine distance, and battery-adaptive GPS polling.',
+              credit: 'Built the dual-signal geofencing engine, GPS + accelerometer state machine, Haversine distance, and battery-adaptive GPS polling.',
             },
             {
               name: 'Harshdeep',
@@ -493,7 +483,7 @@ const slides: Slide[] = [
               nameCls: 'text-amber-300',
               photo: photoHarshdeep,
               bio: 'MS in AI Candidate & Former Research Intern. Experience in Reinforcement Learning, Quantum Computing, and high-dimensional optimisation challenges.',
-              credit: 'Wired the smartwatch to the phone — push notifications, caregiver alerts, and real-time state sync between devices.',
+              credit: 'Wired the smartwatch to the phone, push notifications, caregiver alerts, and real-time state sync between devices.',
             },
             {
               name: 'Ardacandra',
@@ -505,7 +495,7 @@ const slides: Slide[] = [
               nameCls: 'text-sky-300',
               photo: photoArda,
               bio: 'MS in AI Candidate & Former Data Scientist. Bridging 3 years of ML experience with privacy-centric, on-device optimisation for wearables.',
-              credit: 'Built the Community Card feature and trained the logistic regression on SisFall (38 subjects, 15 fall types) — wired into MLFallDetector.',
+              credit: 'Built the Community Card feature and trained the logistic regression on SisFall (38 subjects, 15 fall types), wired into MLFallDetector.',
             },
           ].map(({ name, handle, role, accentCls, stripCls, badgeCls, nameCls, photo, bio, credit }) => (
             <div key={name} className={`rounded-2xl bg-white/5 border ${accentCls} flex flex-col overflow-hidden`}>
@@ -546,7 +536,7 @@ const slides: Slide[] = [
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(74,222,128,0.05),transparent_70%)] pointer-events-none" />
           <Heart className="w-6 h-6 text-green-400 mx-auto mb-3" />
           <p className="text-base font-bold text-white relative z-10">
-            Our Vision — A world where seniors explore their neighbourhood freely,
+            Our Vision, A world where seniors explore their neighbourhood freely,
           </p>
           <p className="text-base text-green-400 italic font-light mt-1.5 relative z-10">
             knowing ANCHOR is silently watching, so their families don't have to.
@@ -570,10 +560,10 @@ export default function App() {
     if (showAnchorTransition) return;
     if (currentSlide === 0) {
       setShowAnchorTransition(true);
+      setDirection(1);
+      setCurrentSlide(1);
       setTimeout(() => {
         setShowAnchorTransition(false);
-        setDirection(1);
-        setCurrentSlide(1);
       }, 1300);
       return;
     }
