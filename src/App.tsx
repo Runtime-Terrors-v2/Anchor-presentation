@@ -302,7 +302,7 @@ const slides: Slide[] = [
           {[
             { icon: <Zap className="w-5 h-5 text-green-400" />,    title: 'Smooth Animations',   body: 'Swiper transitions at 260 ms, fluid enough to feel responsive, slow enough for elderly users.' },
             { icon: <Vibrate className="w-5 h-5 text-sky-300" />,  title: 'Haptic Feedback',      body: '1 gentle pulse on drift · 3 firm pulses on alert, no need to look at the screen.' },
-            { icon: <Users className="w-5 h-5 text-amber-400" />,  title: 'Elderly-First Design', body: 'High-contrast dark theme, large text, minimal steps — usable without reading glasses.' },
+            { icon: <Users className="w-5 h-5 text-amber-400" />,  title: 'Elderly-First Design', body: 'High-contrast dark theme, large text, minimal steps · Usable without reading glasses.' },
           ].map(({ icon, title, body }) => (
             <div key={title} className="flex items-start gap-4 p-3 rounded-xl bg-white/5 border border-white/10">
               <div className="p-2 rounded-lg bg-white/5 shrink-0">{icon}</div>
