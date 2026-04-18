@@ -455,7 +455,7 @@ const slides: Slide[] = [
     title: 'The Dream Team',
     subtitle: undefined,
     content: (
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 'calc(100vh - 160px)', paddingBottom: '80px', width: '100%', alignItems: 'center', zoom: 0.75 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 'calc(100vh - 160px)', paddingBottom: '80px', width: '100%', alignItems: 'center', zoom: 0.85 }}>
       <div className="flex flex-col items-center w-full max-w-6xl" style={{ gap: '24px' }}>
 
         {/* 3 team member cards */}
@@ -509,22 +509,22 @@ const slides: Slide[] = [
 
                 {/* Name + role */}
                 <div>
-                  <h3 className={`text-2xl font-bold font-display ${nameCls}`}>{name}</h3>
+                  <h3 className={`text-3xl font-bold font-display ${nameCls}`}>{name}</h3>
                   <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                    <span className={`text-xs font-mono font-bold px-2.5 py-1 rounded border ${badgeCls}`}>
+                    <span className={`text-sm font-mono font-bold px-2.5 py-1 rounded border ${badgeCls}`}>
                       {handle}
                     </span>
-                    <span className="text-xs text-white/30">{role}</span>
+                    <span className="text-sm text-white/30">{role}</span>
                   </div>
                 </div>
 
                 {/* Bio */}
-                <p className="text-sm text-white/50 leading-relaxed">{bio}</p>
+                <p className="text-base text-white/50 leading-relaxed">{bio}</p>
 
                 {/* Credit */}
                 <div className={`mt-auto pt-3 border-t border-white/10`}>
-                  <div className="text-xs font-mono text-white/30 uppercase tracking-widest mb-1">Why this team</div>
-                  <p className="text-sm text-white/70 leading-relaxed">{credit}</p>
+                  <div className="text-sm font-mono text-white/30 uppercase tracking-widest mb-1">Why this team</div>
+                  <p className="text-base text-white/70 leading-relaxed">{credit}</p>
                 </div>
               </div>
             </div>
@@ -535,10 +535,10 @@ const slides: Slide[] = [
         <div className="w-full p-7 rounded-2xl bg-green-400/5 border border-green-400/20 text-center relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(74,222,128,0.05),transparent_70%)] pointer-events-none" />
           <Heart className="w-6 h-6 text-green-400 mx-auto mb-3" />
-          <p className="text-base font-bold text-white relative z-10">
+          <p className="text-lg font-bold text-white relative z-10">
             Our Vision, A world where seniors explore their neighbourhood freely,
           </p>
-          <p className="text-base text-green-400 italic font-light mt-1.5 relative z-10">
+          <p className="text-lg text-green-400 italic font-light mt-1.5 relative z-10">
             knowing ANCHOR is silently watching, so their families don't have to.
           </p>
         </div>

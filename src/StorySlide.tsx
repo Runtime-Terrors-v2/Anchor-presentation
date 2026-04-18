@@ -10,7 +10,7 @@ export default function StorySlide() {
         flexDirection: 'row',
         width: '100%',
         height: 'calc(100vh - 160px)',
-        gap: '48px',
+        gap: '16px',
         alignItems: 'stretch',
         paddingTop: '70px',
       }}
@@ -36,7 +36,7 @@ export default function StorySlide() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          paddingLeft: '48px',
+          paddingLeft: '16px',
           gap: '28px',
         }}
       >
